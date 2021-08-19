@@ -341,7 +341,7 @@ console.log(elemOf1);
 console.log('PREDICTED OPEN: ', elemOf1B);
   let elemOf1C = openPriceResult[elemOf1] * 0.0001;
 console.log('OPEN MARKET PRICE: ', elemOf1C);
-       Elem1.push([(elemOf1C + elemOf1B) * 0.0005] / 0.0000001);
+       Elem1.push([(elemOf1C + elemOf1B) * 0.00005] / 0.00000001);
         AvgElem1OpenOpen.push(Elem1);
 if(AvgElem1OpenOpen.length <= i) {AvgElem1OpenOpen.push(Elem1[i])}else{}
 }
@@ -372,7 +372,7 @@ let elemOf2B = highBrainResult[elemOf2] * 0.0001;
 console.log('PREDICTED HIGH : ', elemOf2B);
 let elemOf2C = highPriceResult[elemOf2] * 0.0001;
 console.log('HIGH MARKET PRICE: ', elemOf2C);
-Elem2.push([(elemOf2C + elemOf2B) * 0.0005] / 0.0000001);
+Elem2.push([(elemOf2C + elemOf2B) * 0.00005] / 0.00000001);
 AvgElem2HighHigh.push(Elem2);
 if(AvgElem2HighHigh.length <= i) {AvgElem2HighHigh.push(Elem2[i])}else{}
 }
@@ -402,7 +402,7 @@ let elemOf3B = lowBrainResult[elemOf3] * 0.0001;
 console.log('PREDICTED LOW: ', elemOf3B);
 let elemOf3C = lowPriceResult[elemOf3] * 0.0001;
 console.log('LOW MARKET PRICE: ', elemOf3C);
-Elem3.push([(elemOf3C + elemOf3B) * 0.0005] / 0.0000001);
+Elem3.push([(elemOf3C + elemOf3B) * 0.00005] / 0.00000001);
 AvgElem3LowLow.push(Elem3);
 if(AvgElem3LowLow.length <= i) {AvgElem3LowLow.push(Elem2[i])}else{}
 };
@@ -435,12 +435,12 @@ const Elem4 = [];
 for(let i = 0; i < closeBrainResult.length; i++) {
 var elemOf4 = i;
 console.log(elemOf4);
-let elemOf4B = closeBrainResult[elemOf4] * 0.1;
+let elemOf4B = closeBrainResult[elemOf4] * 0.0001;
 console.log('PREDICTED CLOSE: ', elemOf4B);
-let elemOf4C = closePriceResult[elemOf4] * 0.1;
+let elemOf4C = closePriceResult[elemOf4] * 0.0001;
 
 console.log('CLOSE MARKET PRICE: ', elemOf4C);
-Elem4.push([(elemOf4B + elemOf4C) * 0.05] / 0.01);
+Elem4.push([(elemOf4B + elemOf4C) * 0.00005] / 0.00000001);
 AvgElem4CloseClose.push(Elem4);
 if(AvgElem4CloseClose.length <= i) {AvgElem4CloseClose.push(Elem4[i])}else{}
 }
