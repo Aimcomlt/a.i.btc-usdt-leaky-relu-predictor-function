@@ -8,16 +8,36 @@ const initalState = {
     labels: [],
     datasets: [{
       type: 'line',
-      label: "ETH close",
+      label: "TRAINNING CHART",
       data: [],
       backgroundColor: 'rgba(226, 153, 18, 0.9)',
       borderColor: 'rgba(178, 116, 0, 1)',
       pointBorderColor: 'rgba(25, 16, 0, 1)',
       borderWidth: 0.5
     }],
-    
+    options : {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Chart.js Horizontal Bar Chart',
+        },
+      },
+      scales: {
+        x: {
+          type: 'realtime',
+          // Change options only for THIS AXIS
+          realtime: {
+            duration: 60100
+          }
+        },
+      },
+    }
   },
 };
+
+
+
 
 const bitcoinReducer = (state = initalState, action) => {
   const { type, payload } = action;
@@ -39,23 +59,15 @@ const bitcoinReducer = (state = initalState, action) => {
         loading: false,
         data: {
           labels: payload.labels,
-          datasets: [{
-            label: "ETH CLOSE",
-            data: payload.close,
-            backgroundColor: 'rgba(226, 153, 18, 0.9)',
-            borderColor: 'rgba(178, 116, 0, 1)',
-            pointBorderColor: 'rgba(25, 16, 0, 1)',
-            order: 3,
-            borderWidth: 0.5
-          },
+          datasets: [
           {
             type: 'line',
             label: "ETH OPEN",
             data: payload.open,
-            backgroundColor: 'rgba(10, 204, 0, 0.3)',
-            borderColor: 'rgba(10, 204, 0, 1)',
+            backgroundColor: 'rgba(255, 0, 0, 0.4)',
+            borderColor: 'rgba(255, 0, 0, 0.9)',
             pointBorderColor: 'rgba(25, 16, 0, 1)',
-            order: 2,
+            order: 1,
             borderWidth: 0.5
           },{
             type: 'line',
@@ -64,7 +76,7 @@ const bitcoinReducer = (state = initalState, action) => {
             backgroundColor:'rgba(22, 91, 160, 0.9)',
             borderColor: 'rgba(14, 38, 62,0.9)',
             pointBorderColor: 'rgba(22, 91, 160, 1)',
-            order: 4 ,
+            order: 2 ,
             borderWidth: 0.5             
           },{
             type: 'line',
@@ -73,11 +85,39 @@ const bitcoinReducer = (state = initalState, action) => {
             backgroundColor:'rgba(246, 239, 28, 0.48)',
             borderColor: 'rgba(255,255,0, 0.9)',
             pointBorderColor: 'rgba(255,255,0, 0.9)',
-            order: 1,
+            order: 3,
             borderWidth: 0.5
-          }],
-
-       },
+          },
+          {
+            label: "ETH CLOSE",
+            data: payload.close,
+            backgroundColor: 'rgba(0,177,64, 1)',
+            borderColor: 'rgba(0, 0, 0, 0.8)',
+            pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+            order: 4,
+            borderWidth: 0.5
+          },
+        ],
+        options : {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Chart.js Horizontal Bar Chart',
+            },
+          },
+          scales: {
+            x: {
+              type: 'realtime',
+              // Change options only for THIS AXIS
+              realtime: {
+                duration: 60100
+              }
+            },
+          },
+        }
+      },
+      
 
         }
          default: return state;

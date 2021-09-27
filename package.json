@@ -6,10 +6,14 @@
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",
-    "brain.js": "^2.0.0-beta.2",
+    "brain.js": "2.0.0-beta.2",
     "chart.js": "3.4.1",
+    "chartjs-adapter-luxon": "^1.1.0",
+    "chartjs-plugin-streaming": "^2.0.0",
+    "chartjs-plugin-style": "^0.5.0",
     "chartjs-plugin-zoom": "1.1.1",
     "dotenv": "^10.0.0",
+    "luxon": "^2.0.2",
     "moment": "^2.29.1",
     "react": "17.0.2",
     "react-chartjs-2": "3.0.3",
@@ -37,6 +41,7 @@
     "@babel/core": "^7.12.10",
     "@babel/register": "^7.12.10",
     "cross-env": "^5.1.4",
+    "gpu.js": "^2.11.4",
     "react-scripts": "4.0.3"
   },
   "browserslist": {

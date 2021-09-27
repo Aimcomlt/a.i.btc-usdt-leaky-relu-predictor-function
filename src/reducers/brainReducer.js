@@ -1,11 +1,62 @@
 
 
 const initalState = {
-    Loading: false,
-    dataB: {
+  Loading: false,
+  dataB: {
+    labels: [],
+    datasets: [{
+      type: 'radar',
+      label: "BOT CHART PREDICTION",
+      data: [],
+      backgroundColor: 'rgba(226, 153, 18, 0.9)',
+      borderColor: 'rgba(178, 116, 0, 1)',
+      pointBorderColor: 'rgba(25, 16, 0, 1)',
+      options: {
+        responsive: true
+      }
+    }]
+  },
+  dataC: {
+    labels: [],
+    datasets: [{
+      type: 'bar',
+      label: "BOT CHART PREDICTION",
+      data: [],
+      backgroundColor: 'rgba(226, 153, 18, 0.9)',
+      borderColor: 'rgba(178, 116, 0, 1)',
+      pointBorderColor: 'rgba(25, 16, 0, 1)',
+      options: {
+        responsive: true
+      }
+    }]
+  },
+  dataD: {
       labels: [],
       datasets: [{
-        type: 'radar',
+        type: 'line',
+        label: "Real Time vs Open Prediction",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          scales: {
+              x: {
+                  ticks: {
+                      // Include a dollar sign in the ticks
+                      callback: function(value, index, values) {
+                          return '$' + value;
+                      }
+                  }
+              }
+          }
+      }
+      }],
+    },
+    dataF: {
+      labels: [],
+      datasets: [{
+        type: 'line',
         label: "BOT CHART PREDICTION",
         data: [],
         backgroundColor: 'rgba(226, 153, 18, 0.9)',
@@ -14,12 +65,13 @@ const initalState = {
         options: {
           responsive: true
         }
-      }]
+      }],
+      
     },
-    dataC: {
+    dataG: {
       labels: [],
       datasets: [{
-        type: 'bar',
+        type: 'line',
         label: "BOT CHART PREDICTION",
         data: [],
         backgroundColor: 'rgba(226, 153, 18, 0.9)',
@@ -28,198 +80,465 @@ const initalState = {
         options: {
           responsive: true
         }
-      }]
+      }],
+      
     },
-    dataD: {
-        labels: [],
-        datasets: [{
-          type: 'line',
-          label: "Real Time vs Open Prediction",
-          data: [],
-          backgroundColor: 'rgba(226, 153, 18, 0.9)',
-          borderColor: 'rgba(178, 116, 0, 1)',
-          pointBorderColor: 'rgba(25, 16, 0, 1)',
-          options: {
-            scales: {
-                x: {
-                    ticks: {
-                        // Include a dollar sign in the ticks
-                        callback: function(value, index, values) {
-                            return '$' + value;
-                        }
-                    }
-                }
-            }
+    dataH: {
+      labels: [],
+      datasets: [{
+        type: 'line',
+        label: "BOT CHART PREDICTION",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          responsive: true
         }
-        }],
-      },
+      }],
+      
+    },  
 
 }
 const brainReducer = (state = initalState, action) => {
-    const { type, payload } = action;
+  const { type, payload } = action;
 
-    switch (type) {
-        case "AWAITING_BITCOIN":
-          return {
-            ...state,
-            loading: true
-          }
-        case "REJECTED_BITCOIN":
-          return {
-            ...state,
-            loading: false,
-          }
-        case "SUCCESS_BITCOIN":
+  switch (type) {
+      case "AWAITING_BITCOIN":
+        return {
+          ...state,
+          loading: true
+        }
+      case "REJECTED_BITCOIN":
+        return {
+          ...state,
+          loading: false,
+        }
+      case "SUCCESS_BITCOIN":
 
-            return {
-                ...state,
-                loading: false,
-              /*  dataB: {
-                  labels: 'OpenBrainResult',
-                  datasets: [
-                    {
-                    type: 'radar',
-                    label: "OPEN PRICE BRAIN PREDICTION",
-                    data: payload.OpenBrainResult[0],// + (number + 1)],
-                    backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                    borderColor: '	rgba(255, 0, 0, 0.9)',
-                    pointBorderColor: 'rgba(25, 16, 0, 1)',
-        
-                    order: 1
-                    },
-                    {
-                    type: 'radar',
-                    label: "CLOSE PRICE BRAIN PREDICTION",
-                    data: payload.CloseBrainResult,
-                    backgroundColor:'rgba(10, 204, 0, 0.7)',
-                    borderColor: 'rgba(10, 204, 0, 0.9)',
-                    pointBorderColor: 'rgba(10, 204, 0, 0.7)',
-        
-                    order: 2
-                    },
-                    {
-                    type: 'radar',
-                    label: "HIGH PRICE BRAIN PREDICTION",
-                    data: payload.HighBrainResult, 
+          return {
+              ...state,
+              loading: false,
+            
+              dataB: {
+                labels: payload.epoxResult,
+                datasets: [
+                  {
+                  type: 'line',
+                  label: "OPEN PRICE FROM SECONDARY LAYER",
+                  data: payload.LayerIIOpenResult,
+                  backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                  borderColor: '	rgba(255, 0, 0, 0.9)',
+                  pointBorderColor: 'rgba(25, 16, 0, 1)',
+      
+                  order: 1
+                  },
+                  {
+                    type: 'line',
+                    label: "HIGH PRICE FROM SECONDARY LAYER",
+                    data: payload.LayerIIHighResult, 
                     backgroundColor:'rgba(0,0,255, 0.7)',
                     borderColor: 'rgba(0,0,255, 0.9)',
                     pointBorderColor: 'rgba(0,0,255, 0.8)',
         
-                    order: 3
+                    order: 2
                     },
                     {
-                    type: 'radar',
-                    label: "LOW PRICE BRAIN PREDICTION",
-                    data: payload.LowBrainResult,
-                    backgroundColor:'rgba(255,255,0, 0.8)',
-                    borderColor: 'rgba(255,255,0, 0.9)',
-                    pointBorderColor: 'rgba(255,255,0, 0.9)',
-        
-                    order: 4
-                    }]
-                  },*/
-                dataD: {
-                      labels: payload.openBrainResult,
-                      datasets: [{
-                        type: "line",
-                        label: "BTC OPEN PRICE" ,
-                        data: payload.openPriceResult,                        
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      type: 'line',
+                      label: "LOW PRICE FROM SECONDARY LAYER",
+                      data: payload.LayerIILowResult,
+                      backgroundColor:'rgba(255,255,0, 0.8)',
+                      borderColor: 'rgba(255,255,0, 0.9)',
+                      pointBorderColor: 'rgba(255,255,0, 0.9)',
+          
+                      order: 3
+                      },
+                  {
+                  type: 'line',
+                  label: "CLOSE PRICE FROM SECONDARY LAYER",
+                  data: payload.LayerIICloseResult,
+                  backgroundColor:'rgba(10, 204, 0, 0.7)',
+                  borderColor: 'rgba(10, 204, 0, 0.9)',
+                  pointBorderColor: 'rgba(10, 204, 0, 0.7)',
+      
+                  order: 4
+                  },
+                  {
+                    type: "line",
+                    label: "BTC LATESS OPEN PRICE" ,
+                    data: payload.openPriceResult,                        
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderColor: 'rgba(0, 0, 0, 0.8)',
+                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                    order: 5,
+                  },
+                  {
+                    type: "line",
+                    label: "BTC LATESS CLOSE PRICE" ,
+                    data: payload.closePriceResult,                        
+                    backgroundColor: 'rgba(0,177,64, 1)',
+                    borderColor: 'rgba(0, 0, 0, 0.8)',
+                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                    order: 6,
+                  }
+                ]
+                },
+              dataD: {
+                    labels: payload.epoxResult,
+                    datasets: [{
+                      type: "line",
+                      label: "BTC LATESS OPEN PRICE" ,
+                      data: payload.openPriceResult,                        
+                      backgroundColor: 'rgba(255, 0, 0, 1)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 1,
+                    },
+                    {
+                      type: "line",
+                      label: "BTC LATESS CLOSE PRICE" ,
+                      data: payload.closePriceResult,                        
+                      backgroundColor: 'rgba(0,177,64, 1)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 2,
+                    },
+
+                    {
+                      type: 'line',
+                      label: "PREDICTED OPEN",
+                      data: payload.OpenBrainResulta,
+                      backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                      borderColor: 'rgba(255, 0, 0, 0.9)',
+                      pointBorderColor: 'rgba(25, 16, 0, 1)',
+                      order: 3,
+                    },
+                    {
+                      type: 'line',
+                      label: "PREDICTED HIGH",
+                      data: payload.HighBrainResult,
+                      backgroundColor: 'rgba(22, 91, 160, 0.7)',
+                      borderColor: '	rgba(22, 91, 160, 0.9)',
+                      pointBorderColor: 'rgba(22, 91, 160, 1)',
+                      order: 4,
+                    },
+                    {
+                      type: 'line',
+                      label: "PREDICTED LOW",
+                      data: payload.LowBrainResult,
+                      backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                      borderColor: 'rgba(255, 255, 0, 0.9)',
+                      pointBorderColor: 'rgba(255, 255, 0, 1)',
+                      order: 5,
+                    },
+                    {
+                      type: 'line',
+                      label: "PREDICTED CLOSE",
+                      data: payload.CloseBrainResult,
+                      backgroundColor: 'rgba(0,177,64, 1)',
+                      borderColor: 'rgba(0,177,64, 1)',
+                      pointBorderColor: 'rgba(0,177,64, 1)',
+                      order: 6,
+                    },
+                    {
+                      type: 'line',
+                      label: "All 4 PREDICTED MOVING AVERAGE",
+                      data: payload.midOP,
+                      backgroundColor: 'rgba(255, 113, 16, 0.7)',
+                      borderColor: 'rgba(255, 113, 16, 0.9)',
+                      pointBorderColor: 'rgba(255, 113, 16, 0.9)',
+                      order: 7,
+                    },
+                    {
+                      type: 'line',
+                      label: "AVERAGE OF LATESS OPEN VS PREDICTED OPEN",
+                      data: payload.Elem1,
+                      backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                      borderColor: 'rgba(255, 0, 0, 0.9)',
+                      pointBorderColor: 'rgba(25, 16, 0, 1)',
+                      order: 8,
+                    },
+                    {
+                      type: 'line',
+                      label: "AVERAGE OF LATTESS HIGH VS PREDICTED HIGH",
+                      data: payload.Elem2,
+                      backgroundColor: 'rgba(22, 91, 160, 1)',
+                      borderColor: '	rgba(22, 91, 160, 1)',
+                      pointBorderColor: 'rgba(22, 91, 160, 1)',
+                      order: 9,
+                    },
+                    {
+                      type: 'line',
+                      label: "AVERAGE OF LATESS LOW VS PREDICTED LOW",
+                      data: payload.Elem3,
+                      backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                      borderColor: 'rgba(255, 255, 0, 0.9)',
+                      pointBorderColor: 'rgba(255, 255, 0, 1)',
+                      order: 10,
+                    },
+                    {
+                      type: 'line',
+                      label: "AVERAGE OF LATESS CLOSE VS PREDICTED CLOSE",
+                      data: payload.Elem4,
+                      backgroundColor: 'rgba(0,177,64, 1)',
+                      borderColor: 'rgba(0,177,64, 1)',
+                      pointBorderColor: 'rgba(0,177,64, 1)',
+                      order: 11,
+                    },
+                  ]
+                },
+                dataC: {
+                  labels:payload.epoxResult,
+                  datasets: [
+                    {
+                    type: 'line',
+                    label: "WIDTH VALUE OF NEURAL NETWORK HIGH AND LOW",
+                    data: payload.mouthSize,
+                    backgroundColor: 'rgba(22, 91, 160, 0.7)',
+                    borderColor: '	rgba(22, 91, 160, 0.9)',
+                    pointBorderColor: 'rgba(22, 91, 160, 1)',
+                    order: 1
+                    },
+                    {
+                      type: 'line',
+                      label: "VALUE OF NEURAL NETWORK HIGH VS MARKET LATESS HIGH",
+                      data: payload.mouthCeilingSize,
+                      backgroundColor: 'rgba(22, 91, 160, 0.7)',
+                      borderColor: 'rgba(200,100,0, 0.9)',
+                      pointBorderColor: 'rgba(200,100,0, 0.9)',
+                      order: 2
+                      },
+                      {
+                        type: 'line',
+                        label: "WIDTH VALUE OF NEURAL NETWORK LOW VS LATESS LOW",
+                        data: payload.mouthFloorSize,
+                        backgroundColor:'rgba(255,55,0, 0.8)',
+                        borderColor: 'rgba(255,55,0, 0.9)',
+                        pointBorderColor: 'rgba(220,55,0, 0.9)',
+                        order: 3
+                        },
+                    {
+                      type: 'line',
+                      label: "WIDTH VALUE OF MARKET HIGH AND LOW",
+                      data: payload.TongueSize,
+                      backgroundColor:'rgba(255,255,0, 0.8)',
+                      borderColor: 'rgba(255,255,0, 0.9)',
+                      pointBorderColor: 'rgba(255,255,0, 0.9)',
+                      order: 4
+                      },
+                      {
+                        type: 'line',
+                        label: "ZER0 LINE",
+                        data: payload.theZeroLine,
+                        backgroundColor: 'rgba(255, 113, 16, 1)',
+                        borderColor: 'rgba(255, 113, 16, 1)',
+                        pointBorderColor: 'rgba(255, 113, 16, 1)',
+                        order: 5
+                        },
+                  ]
+                 },
+                 dataF: {
+                  labels:payload.epoxResult,
+                  datasets: [
+                   {
+                    type: 'line',
+                    label: "OPEN VS THE PREDICTED AVERAGE OF ALL OHLC",
+                    data: payload.OpenP1,
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderColor: 'rgba(0, 0, 0, 0.8)',
+                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                    order: 1
+                    },
+                    {
+                      type: 'line',
+                      label: "ELEM1(=latess open average with predicted open) VS THE PREDICTED AVERAGE OF ALL OHLC",
+                      data: payload.ElemP1,
+                      backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                      borderColor: 'rgba(255, 0, 0, 0.9)',
+                      pointBorderColor: 'rgba(25, 16, 0, 1)',
+                      order: 2
+                      },
+                      {
+                        type: 'line',
+                        label: "HIGH VS THE PREDICTED AVERAGE OF ALL OHLC",
+                        data: payload.HighP2,
+                        backgroundColor: 'rgba(22, 91, 160, 1)',
                         borderColor: 'rgba(0, 0, 0, 0.8)',
                         pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                        order: 1,
-                      },
+                        order: 3
+                        },
+                        {
+                          type: 'line',
+                          label: "ELEM2(=latess open average with predicted open) VS THE PREDICTED AVERAGE OF ALL OHLC",
+                          data: payload.ElemP2,
+                          backgroundColor: 'rgba(22, 91, 160, 1)',
+                          borderColor: '	rgba(22, 91, 160, 0.9)',
+                          pointBorderColor: 'rgba(22, 91, 160, 1)',
+                          order: 4
+                          },
+                          {
+                            type: 'line',
+                            label: "LOW VS THE PREDICTED AVERAGE OF ALL OHLC",
+                            data: payload.LowP3,
+                            backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                            borderColor: 'rgba(0, 0, 0, 0.8)',
+                            pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                            order: 5
+                            },
+                            {
+                              type: 'line',
+                              label: "ELEM3(=latess open average with predicted open) VS THE PREDICTED AVERAGE OF ALL OHLC",
+                              data: payload.ElemP3,
+                              backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                              borderColor: 'rgba(255, 255, 0, 0.9)',
+                              pointBorderColor: 'rgba(255, 255, 0, 1)',
+                              order: 6
+                              },
+                              {
+                                type: 'line',
+                                label: "CLOSE VS THE PREDICTED AVERAGE OF ALL OHLC",
+                                data: payload.CloseP4,
+                                backgroundColor: 'rgba(0,177,64, 1)',
+                                borderColor: 'rgba(0, 0, 0, 0.8)',
+                                pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                                order: 7
+                                },
+                                {
+                                  type: 'line',
+                                  label: "ELEM4(=latess open average with predicted open) VS THE PREDICTED AVERAGE OF ALL OHLC",
+                                  data: payload.ElemP4,
+                                  backgroundColor: 'rgba(0,177,64, 1)',
+                                  borderColor: 'rgba(0,177,64, 1)',
+                                  pointBorderColor: 'rgba(0,177,64, 1)',
+                                  order: 8
+                                  },
+                                  {
+                                    type: 'line',
+                                    label: "ZEROLINE",
+                                    data: payload.theZeroLine,
+                                    backgroundColor: 'rgba(255, 113, 16, 1)',
+                                    borderColor: 'rgba(255, 113, 16, 1)',
+                                    pointBorderColor: 'rgba(255, 113, 16, 1)',
+                                    order: 9
+                                    },
 
-                      {
-                        type: 'line',
-                        label: "PREDICTED OPEN",
-                        data: payload.OpenBrainResult,
-                        backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                        borderColor: 'rgba(255, 0, 0, 0.9)',
-                        pointBorderColor: 'rgba(25, 16, 0, 1)',
-                        order: 5,
-                      },
-                      {
-                        type: 'line',
-                        label: "PREDICTED CLOSE",
-                        data: payload.CloseBrainResult,
-                        backgroundColor: 'rgba(0,0,255, 0.4)',
-                        borderColor: '	rgba(0,0,255, 0.9)',
-                        pointBorderColor: 'rgba(0,0,255, 1)',
-                        order: 4,
-                      },
-                      {
-                        type: 'line',
-                        label: "PREDICTED HIGH",
-                        data: payload.HighBrainResult,
-                        backgroundColor: 'rgba(22, 91, 160, 0.7)',
-                        borderColor: '	rgba(22, 91, 160, 0.9)',
-                        pointBorderColor: 'rgba(22, 91, 160, 1)',
-                        order: 6,
-                      },
-                      {
-                        type: 'line',
-                        label: "PREDICTED LOW",
-                        data: payload.LowBrainResult,
-                        backgroundColor: 'rgba(255, 255, 0, 0.7)',
-                        borderColor: 'rgba(255, 255, 0, 0.9)',
-                        pointBorderColor: 'rgba(255, 255, 0, 1)',
-                        order: 7,
-                      },
-                      {
-                        type: 'line',
-                        label: "All 4 PREDICTED MOVING AVERAGE",
-                        data: payload.midOP,
-                        backgroundColor: 'rgba(255, 113, 16, 0.7)',
-                        borderColor: 'rgba(255, 113, 16, 0.9)',
-                        pointBorderColor: 'rgba(255, 113, 16, 0.9)',
-                        order: 8,
-                      },
-                      {
-                        type: 'line',
-                        label: "AVERAGE OPEN MARKET VS PREDICTED",
-                        data: payload.Elem1,
-                        backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                        borderColor: 'rgba(255, 0, 0, 0.9)',
-                        pointBorderColor: 'rgba(25, 16, 0, 1)',
-                        order: 9,
-                      },
-                      {
-                        type: 'line',
-                        label: "AVERAGE HIGH MARKET VS PREDICTED",
-                        data: payload.Elem2,
-                        backgroundColor: 'rgba(22, 91, 160, 0.7)',
-                        borderColor: '	rgba(22, 91, 160, 0.9)',
-                        pointBorderColor: 'rgba(22, 91, 160, 1)',
-                        order: 10,
-                      },
-                      {
-                        type: 'line',
-                        label: "AVERAGE LOW MARKET VS PREDICTED",
-                        data: payload.Elem3,
-                        backgroundColor: 'rgba(255, 255, 0, 0.7)',
-                        borderColor: 'rgba(255, 255, 0, 0.9)',
-                        pointBorderColor: 'rgba(255, 255, 0, 1)',
-                        order: 11,
-                      },
-                      {
-                        type: 'line',
-                        label: "AVERAGE CLOSE MARKET VS PREDICTED",
-                        data: payload.Elem4,
-                        backgroundColor: 'rgba(0,0,255, 0.4)',
-                        borderColor: '	rgba(0,0,255, 0.9)',
-                        pointBorderColor: 'rgba(0,0,255, 1)',
-                        order: 12,
-                      },
-                    ]
-                  },
-                  dataC: {
-                    labels:payload.openBrainResult,
-                    datasets: [
+                  ]
+                },   
+                
+                dataG: {
+                  labels:payload.epoxResult,
+                  datasets: [
+                    {
+                      type: 'line',
+                      label: "LATESS OPEN PRICE ABOVE OR BELOW ELEM-1",
+                      data: payload.OpenMomentumX,
+                      backgroundColor: 'rgba(255, 0, 0, 1)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 5
+                      },            
                       {
                       type: 'line',
-                      label: "Real Time vs Predicted Open ",
-                      data: payload.Elem1,
+                      label: "LATESS HIGH PRICE ABOVE OR BELOW ELEM-2",
+                      data: payload.HighMomentumX,
+                      backgroundColor: 'rgba(22, 91, 160, 1)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 6
+                      },
+                      {
+                      type: 'line',
+                      label: "LATESS LOW PRICE ABOVE OR BELOW ELEM-3",
+                      data: payload.LowMomentumX,
+                      backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 7
+                      },
+                      {
+                      type: 'line',
+                      label: "LATESS CLOSE PRICE ABOVE OR BELOW ELEM-4",
+                      data: payload.CloseMomentumX,
+                      backgroundColor: 'rgba(0,177,64, 1)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 8
+                      },
+                      {
+                        type: 'line',
+                        label: "OPEN VS MOMENTUM ",
+                        data: payload.OpenVsMomentum,
+                        backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                        borderColor: 'rgba(255, 0, 0, 0.9)',
+                        pointBorderColor: 'rgba(25, 16, 0, 1)',
+                        order: 9
+                        },            
+                        {
+                        type: 'line',
+                        label: "HIGH VS MOMENTUM",
+                        data: payload.HighVsMomentum,
+                        backgroundColor: 'rgba(22, 91, 160, 1)',
+                        borderColor: '	rgba(22, 91, 160, 0.9)',
+                        pointBorderColor: 'rgba(22, 91, 160, 1)',
+                        order: 10
+                        },
+                        {
+                        type: 'line',
+                        label: "LOW VS MOMENTUM",
+                        data: payload.LowVsMomentum,
+                        backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                        borderColor: 'rgba(255, 255, 0, 0.9)',
+                        pointBorderColor: 'rgba(255, 255, 0, 1)',
+                        order: 11
+                        },
+                        {
+                        type: 'line',
+                        label: "CLOSE VS MOMENTUM",
+                        data: payload.CloseVsMomentum,
+                        backgroundColor: 'rgba(0,177,64, 1)',
+                        borderColor: 'rgba(0,177,64, 1)',
+                        pointBorderColor: 'rgba(0,177,64, 1)',
+                        order: 12
+                        },
+                        {
+                          type: 'line',
+                          label: "ZER0 LINE",
+                          data: payload.theZeroLine,
+                          backgroundColor: 'rgba(255, 113, 16, 1)',
+                          borderColor: 'rgba(255, 113, 16, 1)',
+                          pointBorderColor: 'rgba(255, 113, 16, 1)',
+                          order: 13
+                          },
+                  ]
+                },
+                /*
+      MomentumXOpen,
+      MomentumYOpen,
+      MomXOpenMesurement,
+      MomYOpenMesurement,
+
+      MomentumXHigh,
+      MomXHighMesurement,
+      MomentumYHigh,
+      MomYHighMesurement,
+
+      MomentumXLow,
+      MomXLowMesurement,
+      MomentumYLow,
+      MomYLowMesurement,
+
+      MomentumXClose,
+      MomXCloseMesurement,
+      MomentumYClose,
+      MomYCloseMesurement,
+                */ 
+                dataH: {
+                  labels:payload.epoxResult,
+                  datasets: [
+                    {
+                      type: 'line',
+                      label: "MESUREMENT OF OPEN PRICE TREND FORCE VS 0",
+                      data: payload.MomYOpenMesurement,
                       backgroundColor: 'rgba(255, 0, 0, 0.4)',
                       borderColor: 'rgba(255, 0, 0, 0.9)',
                       pointBorderColor: 'rgba(25, 16, 0, 1)',
@@ -227,81 +546,86 @@ const brainReducer = (state = initalState, action) => {
                       },            
                       {
                       type: 'line',
-                      label: "HIGH PRICE VS PREDICTED A.I. PRICE",
-                      data: payload.Elem2,
-                      backgroundColor: 'rgba(22, 91, 160, 0.7)',
-                      borderColor: '	rgba(22, 91, 160, 0.9)',
+                      label: "MESUREMENT OF HIGH PRICE TREND FORCE VS 0",
+                      data: payload.MomYHighMesurement,
+                      backgroundColor: 'rgba(22, 91, 160, 1)',
+                      borderColor: '	rgba(22, 91, 160, 1)',
                       pointBorderColor: 'rgba(22, 91, 160, 1)',
                       order: 2
                       },
                       {
                       type: 'line',
-                      label: "LOW PRICE VS PREDICTED A.I. PRICE",
-                      data: payload.Elem3,
+                      label: "MESUREMENT OF LOW PRICE TREND FORCE VS 0",
+                      data: payload.MomYLowMesurement,
                       backgroundColor: 'rgba(255, 255, 0, 0.7)',
                       borderColor: 'rgba(255, 255, 0, 0.9)',
                       pointBorderColor: 'rgba(255, 255, 0, 1)',
-                      order: 3
-                      },
-                      {
-                      type: 'line',
-                      label: "CLOSE PRICE VS PREDICTED A.I. PRICE",
-                      data: payload.Elem4,
-                      backgroundColor: 'rgba(0,0,255, 0.4)',
-                      borderColor: '	rgba(0,0,255, 0.9)',
-                      pointBorderColor: 'rgba(0,0,255, 1)',
-                      order: 4
-                      },
-                      {
-                        type: 'line',
-                        label: "All 4 PREDICTED MOVING AVERAGE",
-                        data: payload.midOP,
-                        backgroundColor: 'rgba(255, 113, 16, 0.7)',
-                        borderColor: 'rgba(255, 113, 16, 0.9)',
-                        pointBorderColor: 'rgba(255, 113, 16, 0.9)',
-                        order: 5,
-                      },
-                      /*
-                      {
-                      type: 'bar',
-                      label: "Real High vs Predicted High",
-                      data: payload.RealHigh,
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                      borderColor: 'rgba(0, 0, 0, 0.6)',
-                      pointBorderColor: 'rgba(0, 0, 0, 1)',
-                      order: 5
-                      },
-                      {
-                      type: 'bar',
-                      label: "Predicted High vs Real High",
-                      data: payload.HghPredicted,
-                      backgroundColor: 'rgba(22, 91, 160, 0.9)', //blue
-                      borderColor: 'rgba(22, 91, 160, 0.9)',
-                      pointBorderColor: 'rgba(22, 91, 160, 0.9)',
-                      order: 6
-                      },
-                      {
-                      type: 'bar',
-                      label: "Real Low vs Predicted Low",
-                      data: payload.RealLow,
-                      backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                      borderColor: 'rgba(0, 0, 0, 0.9)',
-                      pointBorderColor: 'rgba(0, 0, 0, 0.9)',
                       order: 7
                       },
                       {
-                      type: 'bar',
-                      label: "Predicted Low vs Real Low",
-                      data: payload.LowPredicted,
-                      backgroundColor: 'rgba(255, 255, 0, 0.9)',
-                      borderColor: 'rgba(255, 255, 0, 0.9)',
-                      pointBorderColor: 'rgba(255, 255, 0, 0.9)',
+                      type: 'line',
+                      label: "MESUREMENT OF CLOSE PRICE TREND FORCE VS 0",
+                      data: payload.MomYCloseMesurement,
+                      backgroundColor: 'rgba(0,177,64, 1)',
+                      borderColor: 'rgba(0,177,64, 1)',
+                      pointBorderColor: 'rgba(0,177,64, 1)',
                       order: 8
-                      }*/
-]
-                   }
-                }
-                 default: return state;
-                }
-             }
-             export default brainReducer;
+                      },
+                        {
+                          type: 'line',
+                          label: "ZER0 LINE",
+                          data: payload.theZeroLine,
+                          backgroundColor: 'rgba(255, 113, 16, 1)',
+                          borderColor: 'rgba(255, 113, 16, 1)',
+                          pointBorderColor: 'rgba(255, 113, 16, 1)',
+                          order: 9
+                          },
+                      /*
+                      {
+                        type: 'line',
+                        label: "OPEN VS MOMENTUM ",
+                        data: payload.OpenVsMomentum,
+                        backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                        borderColor: 'rgba(255, 0, 0, 0.9)',
+                        pointBorderColor: 'rgba(25, 16, 0, 1)',
+                        order: 9
+                        },            
+                        {
+                        type: 'line',
+                        label: "HIGH VS MOMENTUM",
+                        data: payload.HighVsMomentum,
+                        backgroundColor: 'rgba(22, 91, 160, 1)',
+                        borderColor: '	rgba(22, 91, 160, 0.9)',
+                        pointBorderColor: 'rgba(22, 91, 160, 1)',
+                        order: 10
+                        },
+                        {
+                        type: 'line',
+                        label: "LOW VS MOMENTUM",
+                        data: payload.LowVsMomentum,
+                        backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                        borderColor: 'rgba(255, 255, 0, 0.9)',
+                        pointBorderColor: 'rgba(255, 255, 0, 1)',
+                        order: 11
+                        },
+                        {
+                        type: 'line',
+                        label: "CLOSE VS MOMENTUM",
+                        data: payload.CloseVsMomentum,
+                        backgroundColor: 'rgba(0,177,64, 1)',
+                        borderColor: 'rgba(0,177,64, 1)',
+                        pointBorderColor: 'rgba(0,177,64, 1)',
+                        order: 12
+                        },
+                        */
+                  ]
+                },
+                  
+              }
+            
+               default: return state;
+              }
+               
+           }
+ 
+           export default brainReducer;
