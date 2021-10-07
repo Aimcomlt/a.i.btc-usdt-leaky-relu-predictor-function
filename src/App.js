@@ -8,19 +8,22 @@ import { Line } from 'react-chartjs-2';
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "./actions/bitcoinActions";
 //import 'chartjs-adapter-luxon';
+//import background from "./gallery/High_resolution.jpeg";
 import ChartStreaming from 'chartjs-plugin-streaming';
 Chart.register(ChartStreaming);
 function App() {
   const dispatch = useDispatch();
   const state = useSelector(state => state.bitcoin)
   const stateB = useSelector(state => state.brain)
-  const [num] = React.useState(1000); 
+  const [num, setNum] = React.useState(500);
+  const [mom] = React.useState(0.1); 
     
   const fetchData = (time) => {
     //Fetch data from redux using time
     dispatch(getData({
       time: time,
       number: num,
+      momentum: mom,
     }))
   }
 ///<input onChange={e => setNum(e.target.value)} />https://ipfs.io/ipfs/QmeMgBEWFGgQKjmz8CvVLGQuU32rT9zEykhiY4AfhEpckB?filename=Eye-Dragon-Wing2.png
@@ -29,8 +32,7 @@ return (
     <div className="toppageNav">
       <br />
       <img align="left" src ={'https://ipfs.io/ipfs/QmeMgBEWFGgQKjmz8CvVLGQuU32rT9zEykhiY4AfhEpckB?filename=Eye-Dragon-Wing2.png'}  marginLeft={"200px"} style={{ width: '475px', height: '450px', color: "#black"}} alt="adam" press here/>
-      <a href={'https://ipfs.io/ipfs/QmWRdonnmgFYUZEUUAQzenp2jeCyRiVkq8Ryp5H49mFrpz'} rel="noopener noreferrer" style={{color: "#black"}}> ACCESS</a>
-      <h1 align="left">A.I.🤖 vs Binance exchange ETH/USDT Timeseries</h1>
+      <h1 align="left">A.I.🤖 vs Binance exchange BTC/USDT Timeseries</h1>
       <h2 align="center" style={{marginLeft:'10px', marginRight:'13px'}}>NEURAL NETWORK BRAIN FUNCTION</h2>
       <img align="right" src ={'https://ipfs.io/ipfs/QmaUWksQmDUHhEEzctWU5kxJ7siXLjRUdM7CozDt4fLe2D?filename=The-Minter.png'} href={'https://ipfs.io/ipfs/QmWRdonnmgFYUZEUUAQzenp2jeCyRiVkq8Ryp5H49mFrpz'} marginLeft={"200px"} style={{ width: '475px', height: '450px' }} alt="adam"/>
   <h5 align="center" style={{marginLeft:'25px'}}>POWERED BY BRAIN.JS, CHART JS, REDUX AND REACT APP</h5>
@@ -50,7 +52,7 @@ return (
   <h1>◻️Word from the developer◻️</h1>
     <h4>This is were the magic🪄 begins, using brain.js neural network to predict trends📈. But truly were to start?🤔</h4>
     <h4>Working with brain js teleported me back 44 years ago, when I could just understand that mixing lots of colors together equals black.</h4> 
-    <h4>I was a kid😛 playing with water colors and observation I know today is the child's secret, mixing all thoses colors and learning in the process.</h4>
+    <h4>I was a kid😛 playing with water colors. And we all know that observation, is the child's secret, mixing all thoses colors and learning in the process.</h4>
     <h3 align="center">‼️ BOUYA ‼️ 🤣 ‼️ I WAS REAL GOOD AT MAKING BLACK ‼️ 🤣 ‼️</h3>
     <h5>‼️ ⚠️ ‼️ ADVISERY ‼️ ⚠️ ‼️ NO FINANCIAL ‼️ ⚠️ ‼️ ADVISERY ‼️ ⚠️ ‼️</h5>
     <h1>💝‼️ WELCOME ‼️ 📈📉 ‼️ WELCOME ‼️ 📈📉 ‼️ WELCOME ‼️💝</h1>
@@ -64,7 +66,7 @@ return (
   </div>
   <div className="interval-button">
     <br/>
-  <h2>🏁Start binance exchange ETH/USDT timeseries session.</h2>
+  <h2>🏁Start binance exchange BTC/USDT timeseries session.</h2>
   <h5>
       <p>
       By starting the one minute interval a snapshot📸 of 500 pieces of data is introduces as a singular force train session into the neural network.
@@ -105,13 +107,25 @@ return (
   </h5>
   <h5>The neural instance is repeted 4 times with opposit input and output trainning data. As describe above.</h5>
   <h5>The 4 neural network outputs are color coded and used through out the charts.</h5>
+  
   <h4>OPEN : RED🔴 | HIGH : BLUE🔵 | LOW : YELLOW🟡 | CLOSE : GREEN🟢</h4>
-  <button className='btns-wrapperA' onClick={() => setInterval(() => {fetchData("5min")}, 60100)}>⏳START 1 MIN INTERVAL</button>
+  <input onChange={e => setNum(e.target.value)} />
+  <button className='btns-wrapperA' onClick={() => setInterval(() => {fetchData("momentum")}, 60100)}>⏳START 1 MIN INTERVAL</button>
           <button className='btns-wrapperB' onClick={(() => {fetchData()})}>🕳️INSERT TRAINNING DATA📃📃... NOW🕳️</button>
           <h4>The Training array snapshot📸.</h4>
-         <Line className='snap-shot'
+          <Line className='snap-shot' 
          data={state.data} options={{responsive: true}}
-         /></div>
+         />
+         <div className= 'projects-link' >
+         <img src ={'https://ipfs.io/ipfs/QmTTabZTHf7ejwTJxUwNR9g15aCV9Q65yD5UvdQb7qfwMm?filename=Dragon-Head.png'} style={{ width: '300px', marginBottom: '100px', height: '350px' }} alt="adam"/>
+         <a className= 'the-link-projects' href={'https://ipfs.io/ipfs/QmWRdonnmgFYUZEUUAQzenp2jeCyRiVkq8Ryp5H49mFrpz'}> ☣️NFT-testnet-rinkeby☣️ CRYPTO-FLOWERS GALLERY</a>
+         
+         </div>
+
+          </div>
+          <div style={{marginBottom: '100px'}}>
+
+          </div>
          {state.loading && <p>Loading...</p>}
           </div>
   </div>
@@ -119,7 +133,7 @@ return (
 
            <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
             <h2 align = 'center'>⚪MESUREMENT OF THE TREND⚪</h2>
-            <h5 align = 'center'>ETH/USDT TICKER📈</h5>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
             <h3> CHART NUMBER #1 </h3>
 
          <Line
@@ -129,7 +143,7 @@ return (
 
         <div className='chartB-II-result' style={{height:'60%', width:'fit-content(100)'}}>
            <h2 align = 'center'>⚪THE PRICE FORCE AND TREND DIRECTION⚪</h2>
-           <h5 align = 'center'>ETH/USDT TICKER📈</h5>
+           <h5 align = 'center'>BTC/USDT TICKER📈</h5>
            <h3> CHART NUMBER #2 </h3>
 
          <Line
@@ -139,7 +153,7 @@ return (
 
            <div className='chartC-III-result' style={{height:'60%', width:'fit-content(100)'}}>
            <h2 align = 'center'>⚪THE LATESS PRICE VERSES THE PREDICTOR⚪</h2>
-           <h5 align = 'center'>ETH/USDT TICKER📈</h5>
+           <h5 align = 'center'>BTC/USDT TICKER📈</h5>
            <h3> CHART NUMBER #3 </h3>
 
              <Line 
@@ -149,7 +163,7 @@ return (
 
          <div className='chartD-IV-result' style={{height:'60%', width:'fit-content(100)'}}>
             <h2 align = 'center'>⚪THE PREDICTOR VERSES THE OPEN⚫/CLOSE⚫⚪</h2>
-            <h5 align = 'center'>ETH/USDT TICKER📈</h5>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
             <h3> CHART NUMBER #4 </h3>
 
          <Line 
@@ -159,7 +173,7 @@ return (
 
          <div className='chartE-V-result' style={{height:'60%', width:'fit-content(100)'}}>
             <h2 align = 'center'>⚪THE PREDICTOR CORE AVERAGE🟠 OF ALL NEURAL NETWORKS O-H-L-C⚪</h2>
-            <h5 align = 'center'>ETH/USDT TICKER📈</h5>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
             <h3> CHART NUMBER #5 </h3>
   
          <Line 
@@ -169,7 +183,7 @@ return (
 
           <div className='chartF-VI-result' style={{height:'60%', width:'fit-content(100)'}}>
             <h2 align = 'center'>⚪BRAIN PREDICTOR LAYER@2.0.0⚪</h2>
-            <h5 align = 'center'>ETH/USDT TICKER📈</h5>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
             <h3 > CHART NUMBER #6 </h3>
 
             <div align = 'center'>
@@ -193,7 +207,7 @@ return (
            </div>
           <div align="center" style={{ width: '60%', height: '50%', marginBottom: '1%', backgroundColor: 'rgba(3, 0, 0, 0.1)' }}>
         <h1 style={{height : '150px'}}> 
-                  <a href={'https://discord.gg/9HYr36dF'} rel="noopener noreferrer" style={{color: "#black"}}>
+                  <a  align="center" href={'https://discord.gg/9HYr36dF'} rel="noopener noreferrer" style={{color: "#black"}}>
                                   MY DISCORD SERVER
                   </a> </h1>
         </div>
@@ -221,7 +235,8 @@ return (
         position="center"></Iframe>
             
      <button  onClick url={ () => ("https://discord.gg/UYqAsChs")}>CHECK MY HOME BREW HUB</button>
-
+       
+     style={{ backgroundImage: `url(${background})` }}
 
              
              </div>
