@@ -1,6 +1,7 @@
 .chart-wrapper, canvas {
   margin: 10px;
   max-width: 1250px;
+  background: linear-gradient(to bottom, #09203f 0%, #537895 100%);
 }
 .app {
   background-color: rgba(59, 73, 88, 0.6);
@@ -14,18 +15,21 @@
   width: 75%;
   -ms-flex-align: center;
   margin-right: auto;
-  background-color: rgba(35, 55, 75, 0.6);
+  background: linear-gradient(to bottom, #537895 0%, #09203f 100%);
 }
 .chart-wrapper {
   background-color: rgba(35, 55, 75, 0.6);
   border-radius: 4px;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 50px;
   width:70%;
   height: 60%;
   border-radius: 12px;
 }
+
 .container {
+  background: linear-gradient(to bottom, #09203f 0%, #537895 100%);
   border-radius: 5px;
   display: box-flex;                  /* establish flex container */
   flex-direction: inherit; 
@@ -42,34 +46,39 @@
 }
 .info {
   margin-top: 4%;
-  margin-bottom: 4%;
+  margin-bottom: 100px;
   justify-content: center;
   margin-left: 10%;
 }
 .interval-button {
-  margin-top: 1%;
-  margin-right: 30%;
+  margin-top: 2%;
+  
+  margin-right: 10%;
+  margin-bottom : 2%;
   text-align: center;
   border-radius: 5px;
   width:90%;
   height: 90%;
-  background-color: rgb(148, 137, 137);
+  background: linear-gradient(to bottom, #537895 0%, #09203f 100%);
 }
 
 .chart-wrapperB {
   border-radius: 4px;
   margin-top: 50px;
   margin-left: 50px;
+  margin-bottom: 50px;
   justify-content: center;
   position: relative;
   background-color: rgb(148, 137, 137);
 }
 .chart-wrapperC {
-  border-radius: 4px;
+  border-radius: 6px;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 40px;
+   margin-bottom: 40px;
   position: relative;
   background-color: rgb(148, 137, 137);
+  
 }
 
 .btns-wrapperA {
@@ -77,10 +86,10 @@
   display: box-flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width:50%;
+  width:33%;
   height: 30px;
   margin-left: 5px;
-  margin-bottom: 12px;
+  margin-bottom: 40px;
   justify-content: center;
 
 }
@@ -89,26 +98,34 @@
   display: box-flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width:50%;
+  width:33%;
   height: 30px;
   margin-top: 12px;
   margin-left: 5px;
+  margin-bottom: 40px;
   justify-content: center;
   position: relative;
 }
 .snap-shot {
-  margin-left: 6%;
+  margin-left: 140px;
+  margin-bottom: 200px;
+  justify-content: center;
+ 
 }
 .toppageNav{
   border-radius: 10px;
-  background-color: rgb(148, 137, 137);
+  background: linear-gradient(to bottom, #537895 0%, #09203f 100%);
   width:100%;
   height: 60%;
   margin-top: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .chartSnapshot{
+  display: box-flex;
+  flex-wrap: wrap-reverse;
+  flex-direction: row-reverse;
   margin-left: 50px;
+  margin-bottom: 50px;
 }
 
 .input {
@@ -118,8 +135,8 @@
 
 .title {
   display: flex;
-  margin-left: 40px;
-  margin-top: 30px;
+  margin-left: auto;
+  margin-top: auto;
   justify-content: center;
 }
 .navbar {
@@ -166,6 +183,15 @@
   margin-left : 75px;
   margin-top: 6%;
   margin-bottom: 40%;
+}
+.projects-link {
+  
+  margin-right: 50px;
+  margin-top: 10px;
+}
+.the-link-projects {
+  margin-bottom: 10px;
+  margin-left: 50px;
 }
 
 .ticker-sym {

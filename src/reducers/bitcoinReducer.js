@@ -58,12 +58,12 @@ const bitcoinReducer = (state = initalState, action) => {
         ...state,
         loading: false,
         data: {
-          labels: payload.labels,
+          labels: payload.TempepoxNum,
           datasets: [
           {
             type: 'line',
-            label: "ETH OPEN",
-            data: payload.open,
+            label: "BTC OPEN",
+            data: payload.TempXopen,
             backgroundColor: 'rgba(255, 0, 0, 0.4)',
             borderColor: 'rgba(255, 0, 0, 0.9)',
             pointBorderColor: 'rgba(25, 16, 0, 1)',
@@ -71,8 +71,8 @@ const bitcoinReducer = (state = initalState, action) => {
             borderWidth: 0.5
           },{
             type: 'line',
-            label: "ETH HIGH",
-            data: payload.high,
+            label: "BTC HIGH",
+            data: payload.TempXhigh,
             backgroundColor:'rgba(22, 91, 160, 0.9)',
             borderColor: 'rgba(14, 38, 62,0.9)',
             pointBorderColor: 'rgba(22, 91, 160, 1)',
@@ -80,8 +80,8 @@ const bitcoinReducer = (state = initalState, action) => {
             borderWidth: 0.5             
           },{
             type: 'line',
-            label: "ETH LOW",
-            data: payload.low,
+            label: "BTC LOW",
+            data: payload.TempXlow,
             backgroundColor:'rgba(246, 239, 28, 0.48)',
             borderColor: 'rgba(255,255,0, 0.9)',
             pointBorderColor: 'rgba(255,255,0, 0.9)',
@@ -89,8 +89,8 @@ const bitcoinReducer = (state = initalState, action) => {
             borderWidth: 0.5
           },
           {
-            label: "ETH CLOSE",
-            data: payload.close,
+            label: "BTC CLOSE",
+            data: payload.TempXclose,
             backgroundColor: 'rgba(0,177,64, 1)',
             borderColor: 'rgba(0, 0, 0, 0.8)',
             pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
