@@ -27,7 +27,9 @@
   height: 60%;
   border-radius: 12px;
 }
-
+.background {
+  background-image: url('./gallery/black-red-hexagon.jpeg')
+}
 .container {
   background: linear-gradient(to bottom, #09203f 0%, #537895 100%);
   border-radius: 5px;

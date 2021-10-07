@@ -1,5 +1,3 @@
-
-
 const initalState = {
   Loading: false,
   dataB: {
@@ -713,3 +711,4 @@ closeSlmnRslt
            
  
            export default brainReducer;
+
