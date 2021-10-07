@@ -15,7 +15,7 @@ function App() {
   const dispatch = useDispatch();
   const state = useSelector(state => state.bitcoin)
   const stateB = useSelector(state => state.brain)
-  const [num, setNum] = React.useState(500);
+  const [num] = React.useState(500);
   const [mom] = React.useState(0.1); 
     
   const fetchData = (time) => {
