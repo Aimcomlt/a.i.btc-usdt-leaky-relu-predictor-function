@@ -109,7 +109,7 @@ return (
   <h5>The 4 neural network outputs are color coded and used through out the charts.</h5>
   
   <h4>OPEN : RED🔴 | HIGH : BLUE🔵 | LOW : YELLOW🟡 | CLOSE : GREEN🟢</h4>
-  <input onChange={e => setNum(e.target.value)} />
+ 
   <button className='btns-wrapperA' onClick={() => setInterval(() => {fetchData("momentum")}, 60100)}>⏳START 1 MIN INTERVAL</button>
           <button className='btns-wrapperB' onClick={(() => {fetchData()})}>🕳️INSERT TRAINNING DATA📃📃... NOW🕳️</button>
           <h4>The Training array snapshot📸.</h4>
@@ -223,6 +223,7 @@ return (
           }
           export default App;
 /*
+SOME STUFF:
           <div>
              <h3>----- NEURAL NETWORK PREDICTED ASSET ANALYSES </h3>
              <h4>⚪ With humbleness to bring light were to man has gone before {`https://discord.gg/UYqAsChs`}</h4>
@@ -240,5 +241,7 @@ return (
 
              
              </div>
+ <input onChange={e => setNum(e.target.value)} />
+
 
 */
