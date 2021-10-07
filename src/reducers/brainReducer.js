@@ -1,5 +1,3 @@
-
-
 const initalState = {
   Loading: false,
   dataB: {
@@ -119,20 +117,55 @@ const brainReducer = (state = initalState, action) => {
           return {
               ...state,
               loading: false,
-            
+            /*
+epoxSlmnRslt,
+LayerIINNOpRslt,
+LayerIINNHghRslt,
+LayerIINNLwRslt,
+LayerIINNClRslt,
+LayerIINNOpElm1,
+LayerIINNHghElm2,
+LayerIINNLwElm3,
+LayerIINNClElm4,
+openSlmnRslt
+closeSlmnRslt
+
+        epoxSalomonResult,
+        openSalomonResult,
+        closeSalomonResult,
+        LayerIIOpenResult,
+        LayerIIHighResult,
+        LayerIILowResult,
+        LayerIICloseResult,
+        LayerIIOpenResultElem1,
+        LayerIIHighResultElem2,
+        LayerIILowResultElem3,
+        LayerIICloseResultElem4,
+            */
               dataB: {
                 labels: payload.epoxResult,
+                text: 'EXPERIMENTAL',
                 datasets: [
                   {
                   type: 'line',
                   label: "OPEN PRICE FROM SECONDARY LAYER",
                   data: payload.LayerIIOpenResult,
-                  backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                  borderColor: '	rgba(255, 0, 0, 0.9)',
-                  pointBorderColor: 'rgba(25, 16, 0, 1)',
+                  backgroundColor: 'rgba(255, 0, 0, 1)',
+                  borderColor: '	rgba(255, 0, 0, 1)',
+                  pointBorderColor: 'rgba(25, 16, 1)',
       
                   order: 1
                   },
+                  {
+                    type: 'line',
+                    label: "ELEM1 OUTPUT BY BRAIN",
+                    data: payload.LayerIIOpenResultElem1,
+                    backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                    borderColor: '	rgba(255, 0, 0, 0.9)',
+                    pointBorderColor: 'rgba(25, 16, 0, 1)',
+        
+                    order: 2
+                    },
                   {
                     type: 'line',
                     label: "HIGH PRICE FROM SECONDARY LAYER",
@@ -141,8 +174,18 @@ const brainReducer = (state = initalState, action) => {
                     borderColor: 'rgba(0,0,255, 0.9)',
                     pointBorderColor: 'rgba(0,0,255, 0.8)',
         
-                    order: 2
+                    order: 3
                     },
+                    {
+                      type: 'line',
+                      label: "ELEM2 OUTPUT BY BRAIN",
+                      data: payload.LayerIIHighResultElem2, 
+                      backgroundColor:'rgba(0,0,255, 0.7)',
+                      borderColor: 'rgba(0,0,255, 0.9)',
+                      pointBorderColor: 'rgba(0,0,255, 0.8)',
+          
+                      order: 4
+                      },
                     {
                       type: 'line',
                       label: "LOW PRICE FROM SECONDARY LAYER",
@@ -151,44 +194,77 @@ const brainReducer = (state = initalState, action) => {
                       borderColor: 'rgba(255,255,0, 0.9)',
                       pointBorderColor: 'rgba(255,255,0, 0.9)',
           
-                      order: 3
+                      order: 5
                       },
-                  {
-                  type: 'line',
-                  label: "CLOSE PRICE FROM SECONDARY LAYER",
-                  data: payload.LayerIICloseResult,
-                  backgroundColor:'rgba(10, 204, 0, 0.7)',
-                  borderColor: 'rgba(10, 204, 0, 0.9)',
-                  pointBorderColor: 'rgba(10, 204, 0, 0.7)',
-      
-                  order: 4
-                  },
-                  {
-                    type: "line",
-                    label: "BTC LATESS OPEN PRICE" ,
-                    data: payload.openPriceResult,                        
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    borderColor: 'rgba(0, 0, 0, 0.8)',
-                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                    order: 5,
-                  },
-                  {
-                    type: "line",
-                    label: "BTC LATESS CLOSE PRICE" ,
-                    data: payload.closePriceResult,                        
-                    backgroundColor: 'rgba(0,177,64, 1)',
-                    borderColor: 'rgba(0, 0, 0, 0.8)',
-                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                    order: 6,
-                  }
-                ]
-                },
+                      {
+                        type: 'line',
+                        label: "ELEM3 OUTPUT BY BRAIN",
+                        data: payload.LayerIILowResultElem3,
+                        backgroundColor:'rgba(255,255,0, 0.8)',
+                        borderColor: 'rgba(255,255,0, 0.9)',
+                        pointBorderColor: 'rgba(255,255,0, 0.9)',
+            
+                        order: 6
+                        },
+                        {
+                           type: 'line',
+                           label: "CLOSE PRICE FROM SECONDARY LAYER",
+                           data: payload.LayerIICloseResult,
+                           backgroundColor:'rgba(10, 204, 0, 0.7)',
+                           borderColor: 'rgba(10, 204, 0, 0.9)',
+                           pointBorderColor: 'rgba(10, 204, 0, 0.7)',
+                           order: 7
+                           },
+                            {
+                               type: 'line',
+                               label: "ELEM4 OUTPUT BY BRAIN",
+                               data: payload.LayerIICloseResultElem4,
+                               backgroundColor:'rgba(10, 204, 0, 0.7)',
+                               borderColor: 'rgba(10, 204, 0, 0.9)',
+                               pointBorderColor: 'rgba(10, 204, 0, 0.7)',
+                               order: 8
+                              },
+
+                              {        
+                                type: "line",
+                                label: "BTC LATESS OPEN PRICE" ,
+                                data: payload.openResult,                        
+                                backgroundColor: 'rgba(255, 0, 0, 1)',
+                                borderColor: 'rgba(0, 0, 0, 0.8)',
+                                pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                                order: 9,
+                                },
+                                {
+                                  type: "line",
+                                  label: "BTC LATESS CLOSE PRICE" ,
+                                  data: payload.closeResult,                        
+                                  backgroundColor: 'rgba(0,177,64, 1)',
+                                  borderColor: 'rgba(0, 0, 0, 0.8)',
+                                  pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                                  order: 10,
+                                  }
+                                  
+                                 ],
+                                 options: {
+                                   responsive: true,
+                                   scales: {
+                                    x: {
+                                      type: 'realtime',
+                                      // Change options only for THIS AXIS
+                                      realtime: {
+                                        duration: 60100
+                                      }
+                                    },
+                                  },
+                                            
+                                 }
+                                },
               dataD: {
                     labels: payload.epoxResult,
                     datasets: [{
                       type: "line",
                       label: "BTC LATESS OPEN PRICE" ,
-                      data: payload.openPriceResult,                        
+                      data: payload.openResult,                        
                       backgroundColor: 'rgba(255, 0, 0, 1)',
                       borderColor: 'rgba(0, 0, 0, 0.8)',
                       pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
@@ -197,7 +273,7 @@ const brainReducer = (state = initalState, action) => {
                     {
                       type: "line",
                       label: "BTC LATESS CLOSE PRICE" ,
-                      data: payload.closePriceResult,                        
+                      data: payload.closeResult,                        
                       backgroundColor: 'rgba(0,177,64, 1)',
                       borderColor: 'rgba(0, 0, 0, 0.8)',
                       pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
@@ -533,6 +609,10 @@ const brainReducer = (state = initalState, action) => {
       MomYCloseMesurement,
                 */ 
                 dataH: {
+                   exports : [
+                    {
+                    data: payload.LayerIIHighResultElem2
+                    }],
                   labels:payload.epoxResult,
                   datasets: [
                     {
@@ -619,13 +699,16 @@ const brainReducer = (state = initalState, action) => {
                         },
                         */
                   ]
-                },
                   
+                },
+  
               }
             
                default: return state;
               }
                
            }
+           
  
            export default brainReducer;
+
