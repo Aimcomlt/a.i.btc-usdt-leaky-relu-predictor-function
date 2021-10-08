@@ -131,6 +131,43 @@ return (
   </div>
         <div className='container'>
 
+        <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
+            <h2 align = 'center'>⚪PREDICTED OPEN⚪</h2>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
+            <h3> PREDICTED OPEN VERSES LATESS OPEN PRICE </h3>
+
+         <Line
+         data={stateB.dataOPEN} options={{responsive: true}}
+         />
+         </div>
+         <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
+            <h2 align = 'center'>⚪PREDICTED HIGH⚪</h2>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
+            <h3>PREDICTED HIGH VERSES LATESS HIGH PRICE </h3>
+
+         <Line
+         data={stateB.dataHIGH} options={{responsive: true}}
+         />
+         </div>
+         <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
+            <h2 align = 'center'>⚪PREDICTED LOW⚪</h2>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
+            <h3> PREDICTED LOW VERSES LATESS LOW PRICE</h3>
+
+         <Line
+         data={stateB.dataLOW} options={{responsive: true}}
+         />
+         </div>
+         <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
+            <h2 align = 'center'>⚪PREDICTED CLOSE⚪</h2>
+            <h5 align = 'center'>BTC/USDT TICKER📈</h5>
+            <h3>PREDICTED CLOSE VERSES LATESS CLOSE PRICE </h3>
+
+         <Line
+         data={stateB.dataCLOSE} options={{responsive: true}}
+         />
+         </div>
+
            <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
             <h2 align = 'center'>⚪MESUREMENT OF THE TREND⚪</h2>
             <h5 align = 'center'>BTC/USDT TICKER📈</h5>

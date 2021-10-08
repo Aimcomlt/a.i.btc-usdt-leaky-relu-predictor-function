@@ -144,8 +144,8 @@ const citrus = fruits.slice(0, 5);
 const responseA = await axios.get(`https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m`);
 
 
- console.log('EPOX: ', TempepoxNum, 'O: ', TempXopen,'H: ', TempXhigh,'L: ', TempXlow,'C: ', TempXclose);
-if(TempepoxNum.length > 499)
+ 
+if(TempepoxNum.length >= 500)
 {
   var vbv = responseA.data.length -1;
   TempepoxNum.push(responseA.data[vbv][0])
@@ -176,9 +176,11 @@ console.log('CH-EPOX: ', TempCHepoxNum, 'CH-O: ', TempCHXopen,'CH-H: ', TempCHXh
  
     
     let valueX = TempXopen.length;
+
+    console.log('EPOX: ', TempepoxNum, 'O: ', TempXopen,'H: ', TempXhigh,'L: ', TempXlow,'C: ', TempXclose);
   
-    console.log('******MASTER X EPOX-NUMBER | OPEN | HIGH | LOW | CLOSE: ',TempepoxNum[0], TempXopen[0] , TempXhigh[0], TempXlow[0], TempXclose[0])
-    console.log('CHECKING THE ARRAY AFTER THE RESPONSE CALL AND DOES NOT EXCCED 1000: ',TempXopen.length, 'vs the valueX: ', valueX)
+    console.log('******MASTER X EPOX-NUMBER | OPEN | HIGH | LOW | CLOSE: ',TempCHepoxNum, TempCHXopen , TempCHXhigh, TempXlow, TempCHXclose)
+    console.log('CHECKING THE ARRAY AFTER THE RESPONSE CALL AND DOES NOT EXCCED 1000: ',TempCHXopen.length, 'vs the valueX: ', valueX)
 
 
 
@@ -251,17 +253,30 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
 
     for (let i = 0; i < (TempXopen.length); i++) {
     
-      highMA.push(TempXhigh[i]) //For task check: this:)
-      labels.push(TempepoxNum[i]) //For task check: this:)
-      open.push(TempXopen[i]) //For task check: this:)
-      high.push(TempXhigh[i]) //For task check: this:)
-      close.push(TempXclose[i]) //For task check: this:)
-      low.push(TempXlow[i]) //For task check: this:) line...to be continued...
+      if(i !== 0){
+        highMA.push(TempXhigh[i-1]) 
+        labels.push(TempepoxNum[i-1]) 
+        open.push(TempXopen[i-1]) 
+        high.push(TempXhigh[i-1]) 
+        close.push(TempXclose[i-1]) 
+        low.push(TempXlow[i-1])  
+        openMA.push(TempXopen[i-1])
+        highMA.push(TempXhigh[i-1])
+        lowMA.push(TempXlow[i-1])
+        closeMA.push(TempXclose[i-1])
+      }else{
+        highMA.push(TempXhigh[i]) 
+        labels.push(TempepoxNum[i]) 
+        open.push(TempXopen[i]) 
+        high.push(TempXhigh[i])
+        close.push(TempXclose[i])
+        low.push(TempXlow[i]) 
+        openMA.push(TempXopen[i])
+        highMA.push(TempXhigh[i])
+        lowMA.push(TempXlow[i])
+        closeMA.push(TempXclose[i])
+      }
 
-      openMA.push(TempXopen[i])
-      highMA.push(TempXhigh[i])
-      lowMA.push(TempXlow[i])
-      closeMA.push(TempXclose[i])
       
       if (i === (number - 1)) {
         break;
@@ -594,25 +609,17 @@ const closeResult =[];
 
 for(let i = 0; i < TempCHepoxNum.length; i++)
 {   
-  epoxResult.push(TempCHepoxNum[i-1]);     
+  epoxResult.push(TempCHepoxNum[i - 1]);     
+
+  openResult.push(TempCHXopen[i - 1]);     
+
+  highResult.push(TempCHXhigh[i - 1]);     
+
+  lowResult.push(TempCHXlow[i - 1]);      
+
+  closeResult.push(TempCHXclose[i - 1]);      
 }
-for(let i = 0; i < TempCHXopen.length; i++)
-{
-  openResult.push(TempCHXopen[i-1]);     
-}
-for(let i = 0; i < TempCHXhigh.length; i++)
-{
-  highResult.push(TempCHXhigh[i-1]);     
-}
-for(let i = 0; i < TempCHXlow; i++)
-{
-  lowResult.push(TempCHXlow[i-1]);      
-}
-for(let i = 0; i < TempCHXclose.length; i++)
-{
-  closeResult.push(TempCHXclose[i-1]);      
-}
-//console.log("Epox Number: ", epoxResult, 'OPEN R: ', openResult, 'HIGH R: ', highResult, 'LOW R: ', lowResult, 'CLOSE R: ', closeResult);
+console.log("Epox Number: ", epoxResult[epoxResult.length -1], 'OPEN R: ', openResult[openResult.length -1], 'HIGH R: ', highResult[highResult.length -1], 'LOW R: ', lowResult[lowResult.length -1], 'CLOSE R: ', closeResult[closeResult.length -1]);
 
 ////OPEN BRAIN RESULT TASK
   const openBrainResult =[];
@@ -631,7 +638,7 @@ for(let i = 0; i < OpenBrainResulta.length; i++) {
 //console.log(elemOf1);
   let elemOf1B = openBrainResult[elemOf1] * globalNormValu;
 //console.log('PREDICTED OPEN: ', elemOf1B);
-  let elemOf1C = ThePrice[ThePrice.length - 1] * globalNormValu;
+  let elemOf1C = TempCHXopen[elemOf1] * globalNormValu;
 //console.log('OPEN MARKET PRICE: ', elemOf1C);
        Elem1.push([(elemOf1C + elemOf1B) * 0.000005] / 0.0000000001); // must hand boum it lol for now! it's a simple average but has lots of depth 
         AvgElem1OpenOpen.push(Elem1);
@@ -660,7 +667,7 @@ var elemOf2 = i;
 //console.log(elemOf2);
 let elemOf2B = highBrainResult[elemOf2] * globalNormValu;
 //console.log('PREDICTED HIGH : ', elemOf2B);
-let elemOf2C = HighPrice[HighPrice.length -1] * globalNormValu;
+let elemOf2C = TempCHXhigh[elemOf2] * globalNormValu;
 //console.log('HIGH MARKET PRICE: ', elemOf2C);
 Elem2.push([(elemOf2C + elemOf2B) * 0.000005] / 0.0000000001);
 AvgElem2HighHigh.push(Elem2);
@@ -687,7 +694,7 @@ var elemOf3 = i;
 //console.log(elemOf3);
 let elemOf3B = lowBrainResult[elemOf3] * globalNormValu;
 //console.log('PREDICTED LOW: ', elemOf3B);
-let elemOf3C = LowPrice[LowPrice.length -1] * globalNormValu;
+let elemOf3C = TempCHXlow[elemOf3] * globalNormValu;
 //console.log('LOW MARKET PRICE: ', elemOf3C);
 Elem3.push([(elemOf3C + elemOf3B) * 0.000005] / 0.0000000001);
 AvgElem3LowLow.push(Elem3);
@@ -714,7 +721,7 @@ var elemOf4 = i;
 //console.log(elemOf4);
 let elemOf4B = closeBrainResult[elemOf4] * globalNormValu;
 //console.log('PREDICTED CLOSE: ', elemOf4B);
-let elemOf4C = ClosePrice[ClosePrice.length -1] * globalNormValu;
+let elemOf4C = TempCHXclose[elemOf4] * globalNormValu;
 
 //console.log('CLOSE MARKET PRICE: ', elemOf4C);
 Elem4.push([(elemOf4B + elemOf4C) * 0.000005] / 0.0000000001);

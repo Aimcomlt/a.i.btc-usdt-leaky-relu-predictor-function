@@ -95,7 +95,67 @@ const initalState = {
         }
       }],
       
-    },  
+    }, 
+    dataOPEN: {
+      labels: [],
+      datasets: [{
+        type: 'line',
+        label: "BOT CHART PREDICTION",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          responsive: true
+        }
+      }],
+      
+    },
+    dataHIGH: {
+      labels: [],
+      datasets: [{
+        type: 'line',
+        label: "BOT CHART PREDICTION",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          responsive: true
+        }
+      }],
+      
+    },
+    dataLOW: {
+      labels: [],
+      datasets: [{
+        type: 'line',
+        label: "BOT CHART PREDICTION",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          responsive: true
+        }
+      }],
+      
+    },
+    dataCLOSE: {
+      labels: [],
+      datasets: [{
+        type: 'line',
+        label: "BOT CHART PREDICTION",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          responsive: true
+        }
+      }],
+      
+    }, 
 
 }
 const brainReducer = (state = initalState, action) => {
@@ -587,6 +647,136 @@ closeSlmnRslt
                           },
                   ]
                 },
+                dataOPEN: {
+                  labels: payload.epoxResult,
+                  datasets: [{
+                    type: "line",
+                    label: "BTC LATESS OPEN PRICE" ,
+                    data: payload.openResult,                        
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderColor: 'rgba(0, 0, 0, 0.8)',
+                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                    order: 1,
+                  },
+                  {
+                    type: 'line',
+                    label: "PREDICTED OPEN",
+                    data: payload.OpenBrainResulta,
+                    backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                    borderColor: 'rgba(255, 0, 0, 0.9)',
+                    pointBorderColor: 'rgba(25, 16, 0, 1)',
+                    order: 2,
+                  },
+
+                  {
+                    type: 'line',
+                    label: "All 4 PREDICTED MOVING AVERAGE",
+                    data: payload.midOP,
+                    backgroundColor: 'rgba(255, 113, 16, 0.7)',
+                    borderColor: 'rgba(255, 113, 16, 0.9)',
+                    pointBorderColor: 'rgba(255, 113, 16, 0.9)',
+                    order: 3,
+                  },
+                ]
+                  
+              },
+              dataHIGH: {
+                labels: payload.epoxResult,
+                datasets: [{
+                  type: "line",
+                  label: "BTC LATESS HIGH PRICE" ,
+                  data: payload.highResult,                        
+                  backgroundColor: 'rgba(22, 91, 160, 1)',
+                  borderColor: 'rgba(0, 0, 0, 0.8)',
+                  pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                  order: 1,
+                },
+                {
+                  type: 'line',
+                  label: "PREDICTED HIGH",
+                  data: payload.HighBrainResult,
+                  backgroundColor: 'rgba(22, 91, 160, 0.7)',
+                  borderColor: '	rgba(22, 91, 160, 0.9)',
+                  pointBorderColor: 'rgba(22, 91, 160, 1)',
+                  order: 2,
+                },
+                {
+                  type: 'line',
+                  label: "All 4 PREDICTED MOVING AVERAGE",
+                  data: payload.midOP,
+                  backgroundColor: 'rgba(255, 113, 16, 0.7)',
+                  borderColor: 'rgba(255, 113, 16, 0.9)',
+                  pointBorderColor: 'rgba(255, 113, 16, 0.9)',
+                  order: 3,
+                },
+              ]
+                
+            },
+            dataLOW: {
+              labels: payload.epoxResult,
+              datasets: [{
+                type: "line",
+                label: "BTC LATESS LOW PRICE" ,
+                data: payload.lowResult,                        
+                backgroundColor: 'rgba(255, 255, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.8)',
+                pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                order: 1,
+              },
+              {
+                type: 'line',
+                label: "PREDICTED LOW",
+                data: payload.LowBrainResult,
+                backgroundColor: 'rgba(255, 255, 0, 0.7)',
+                borderColor: 'rgba(255, 255, 0, 0.9)',
+                pointBorderColor: 'rgba(255, 255, 0, 1)',
+                order: 2,
+              },
+              {
+                type: 'line',
+                label: "8 LINE PREDICTED MOVING AVERAGE",
+                data: payload.midOP,
+                backgroundColor: 'rgba(255, 113, 16, 0.7)',
+                borderColor: 'rgba(255, 113, 16, 0.9)',
+                pointBorderColor: 'rgba(255, 113, 16, 0.9)',
+                order: 3,
+              },
+            ]
+              
+          },
+          dataCLOSE: {
+            labels: payload.epoxResult,
+            datasets: [
+            {
+              type: "line",
+              label: "BTC LATESS CLOSE PRICE" ,
+              data: payload.closeResult,                        
+              backgroundColor: 'rgba(0,177,64, 1)',
+              borderColor: 'rgba(0, 0, 0, 0.8)',
+              pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+              order: 1,
+            },
+            {
+              type: 'line',
+              label: "PREDICTED CLOSE",
+              data: payload.CloseBrainResult,
+              backgroundColor: 'rgba(0,177,64, 1)',
+              borderColor: 'rgba(0,177,64, 1)',
+              pointBorderColor: 'rgba(0,177,64, 1)',
+              order: 2,
+            },
+            {
+              type: 'line',
+              label: "8 LINE PREDICTED MOVING AVERAGE",
+              data: payload.midOP,
+              backgroundColor: 'rgba(255, 113, 16, 0.7)',
+              borderColor: 'rgba(255, 113, 16, 0.9)',
+              pointBorderColor: 'rgba(255, 113, 16, 0.9)',
+              order: 3,
+            },
+          ]
+            
+        },
                 /*
       MomentumXOpen,
       MomentumYOpen,
@@ -701,6 +891,7 @@ closeSlmnRslt
                   ]
                   
                 },
+                
   
               }
             
