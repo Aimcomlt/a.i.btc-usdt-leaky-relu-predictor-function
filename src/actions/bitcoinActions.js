@@ -143,8 +143,6 @@ const citrus = fruits.slice(0, 5);
   //THE ACTUAL IMPLEMENTATION OF THE AXIOS GET FUNCTION ***REMINDER BINANCE MAX CALL IS 500 
 const responseA = await axios.get(`https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m`);
 
-
- 
 if(TempepoxNum.length >= 500)
 {
   var vbv = responseA.data.length -1;
@@ -162,16 +160,25 @@ if(TempepoxNum.length >= 500)
     TempXhigh.push(responseA.data[i][2]); 
     TempXlow.push(responseA.data[i][3]);
     TempXclose.push(responseA.data[i][4]);
-
-
-  }
 }
-var vbz = responseA.data.length -1;
-TempCHepoxNum.push(responseA.data[vbz][0])
-TempCHXopen.push(responseA.data[vbz][1]);
-TempCHXhigh.push(responseA.data[vbz][2]);
-TempCHXlow.push(responseA.data[vbz][3]);
-TempCHXclose.push(responseA.data[vbz][4]); 
+}
+if(TempepoxNum.length >= 500){
+  var vbz = responseA.data.length -1;
+  TempCHepoxNum.push(responseA.data[vbz][0])
+  TempCHXopen.push(responseA.data[vbz][1]);
+  TempCHXhigh.push(responseA.data[vbz][2]);
+  TempCHXlow.push(responseA.data[vbz][3]);
+  TempCHXclose.push(responseA.data[vbz][4]); 
+
+}else{
+  for (let i = 0; i < (responseA.data.length); i++) {
+  TempCHepoxNum.push(responseA.data[i][0])
+  TempCHXopen.push(responseA.data[i][1]);
+  TempCHXhigh.push(responseA.data[i][2]);
+  TempCHXlow.push(responseA.data[i][3]);
+  TempCHXclose.push(responseA.data[i][4]); 
+}
+}
 console.log('CH-EPOX: ', TempCHepoxNum, 'CH-O: ', TempCHXopen,'CH-H: ', TempCHXhigh,'CH-L: ', TempCHXlow,'CH-C: ', TempCHXclose);
  
     

@@ -339,7 +339,7 @@ closeSlmnRslt
                       pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
                       order: 2,
                     },
-
+/*
                     {
                       type: 'line',
                       label: "PREDICTED OPEN",
@@ -376,6 +376,7 @@ closeSlmnRslt
                       pointBorderColor: 'rgba(0,177,64, 1)',
                       order: 6,
                     },
+                    */
                     {
                       type: 'line',
                       label: "All 4 PREDICTED MOVING AVERAGE",
@@ -670,12 +671,21 @@ closeSlmnRslt
 
                   {
                     type: 'line',
-                    label: "All 4 PREDICTED MOVING AVERAGE",
+                    label: "8 LINES PREDICTED MOVING AVERAGE",
                     data: payload.midOP,
                     backgroundColor: 'rgba(255, 113, 16, 0.7)',
                     borderColor: 'rgba(255, 113, 16, 0.9)',
                     pointBorderColor: 'rgba(255, 113, 16, 0.9)',
                     order: 3,
+                  },
+                  {
+                    type: 'line',
+                    label: "AVERAGE OF LATESS CLOSE VS PREDICTED CLOSE",
+                    data: payload.Elem4,
+                    backgroundColor: 'rgba(0,177,64, 1)',
+                    borderColor: 'rgba(0,177,64, 1)',
+                    pointBorderColor: 'rgba(0,177,64, 1)',
+                    order: 4,
                   },
                 ]
                   
@@ -702,7 +712,7 @@ closeSlmnRslt
                 },
                 {
                   type: 'line',
-                  label: "All 4 PREDICTED MOVING AVERAGE",
+                  label: "8 LINES PREDICTED MOVING AVERAGE",
                   data: payload.midOP,
                   backgroundColor: 'rgba(255, 113, 16, 0.7)',
                   borderColor: 'rgba(255, 113, 16, 0.9)',
@@ -734,7 +744,7 @@ closeSlmnRslt
               },
               {
                 type: 'line',
-                label: "8 LINE PREDICTED MOVING AVERAGE",
+                label: "8 LINES PREDICTED MOVING AVERAGE",
                 data: payload.midOP,
                 backgroundColor: 'rgba(255, 113, 16, 0.7)',
                 borderColor: 'rgba(255, 113, 16, 0.9)',
@@ -767,7 +777,7 @@ closeSlmnRslt
             },
             {
               type: 'line',
-              label: "8 LINE PREDICTED MOVING AVERAGE",
+              label: "8 LINES PREDICTED MOVING AVERAGE",
               data: payload.midOP,
               backgroundColor: 'rgba(255, 113, 16, 0.7)',
               borderColor: 'rgba(255, 113, 16, 0.9)',

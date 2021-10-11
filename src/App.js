@@ -118,7 +118,7 @@ return (
          />
          <div className= 'projects-link' >
          <img src ={'https://ipfs.io/ipfs/QmTTabZTHf7ejwTJxUwNR9g15aCV9Q65yD5UvdQb7qfwMm?filename=Dragon-Head.png'} style={{ width: '300px', marginBottom: '100px', height: '350px' }} alt="adam"/>
-         <a className= 'the-link-projects' href={'https://ipfs.io/ipfs/QmWRdonnmgFYUZEUUAQzenp2jeCyRiVkq8Ryp5H49mFrpz'}> ☣️NFT-testnet-rinkeby☣️ CRYPTO-FLOWERS GALLERY</a>
+         <a className= 'the-link-projects' href={'http://crypto-flowers.surge.sh/'}> ☣️NFT-testnet-rinkeby☣️ CRYPTO-FLOWERS GALLERY</a>
          
          </div>
 
