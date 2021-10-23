@@ -17,6 +17,13 @@ const initalState = {
     }],
     options : {
       responsive: true,
+      yAxes: [{
+        ticks: {
+            min: 0,
+            max:55,
+            stepSize: 1
+        }
+    }],
       plugins: {
         title: {
           display: true,

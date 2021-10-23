@@ -3,11 +3,11 @@ import brain from 'brain.js/src/index';
 
 
 const config = {
-  binaryThresh: 0.5,
-  log: true, 
+  binaryThresh: 0.05,
+  log: false, 
   learningRate: 0.3,
   momentum: 0.08,
-  hiddenLayers: [10, 10], // array of ints for the sizes of the hidden layers in the network
+  hiddenLayers: [50], // array of ints for the sizes of the hidden layers in the network
   activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
   leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
 };
@@ -28,15 +28,36 @@ const OpenReAquiredTargetLW = new brain.NeuralNetwork(config);
 //THE A.I. PREDICTION RESULT: INITIALIZING ARRAYS OHLC
 
 const OpenBrainResulta = [];
-const OpenBrainResultb = [];
-const OpenBrainResultc = [];
-const OpenBrainResultd = [];
-const OpenBrainResulte = [];
-const OpenBrainResultf = [];
+const CloseBrainResulta = [];
+const HighBrainResulta = [];
+const LowBrainResulta = [];
 
-const CloseBrainResult = [];
-const HighBrainResult = [];
-const LowBrainResult = [];
+const OpenBrainResultb = [];
+const CloseBrainResultb = [];
+const HighBrainResultb = [];
+const LowBrainResultb = [];
+
+const OpenBrainResultc = [];
+const CloseBrainResultc = [];
+const HighBrainResultc = [];
+const LowBrainResultc = [];
+
+const OpenBrainResultd = [];
+const CloseBrainResultd = [];
+const HighBrainResultd = [];
+const LowBrainResultd = [];
+
+const OpenBrainResulte = [];
+const CloseBrainResulte = [];
+const HighBrainResulte = [];
+const LowBrainResulte = [];
+
+const OpenBrainResultf = [];
+const CloseBrainResultf = [];
+const HighBrainResultf = [];
+const LowBrainResultf = [];
+
+
 // LAYER TWO RE-AQUIRED TARGET PRICE OF ASSET OHLC
 const LayerIIOpenResult = [];
 const LayerIIOpenResultElem1 = [];
@@ -98,14 +119,26 @@ const ElemP3 = [];
 const CloseP4 = [];
 const ElemP4 = [];
 
+
+
+
+///////////////////////
+export const mailBox  = []
 //INITIALIZING ARRAYS FOR THE AXIOS GET FUNCTION 
   
     const globalLength = [];
     const TempepoxNum = [];
-    const TempXopen = [];
     const TempXhigh = [];
+    const TempXopen = [];
     const TempXlow = [];
     const TempXclose = [];
+
+    mailBox.push( 
+      TempXhigh ,
+      TempXopen,
+      TempXlow,
+      TempXclose
+    )
     
     const TempCHepoxNum = [];
     const TempCHXopen = [];
@@ -120,6 +153,7 @@ const ElemP4 = [];
      //console.log('------------------------here--:ZZZ value increment test',increment)
 
 export const getData = ({ time, number, momentum }) => async dispatch => {
+
   try {
     dispatch({
       type: "AWAITING_BITCOIN"
@@ -142,7 +176,9 @@ const citrus = fruits.slice(0, 5);
               
   //THE ACTUAL IMPLEMENTATION OF THE AXIOS GET FUNCTION ***REMINDER BINANCE MAX CALL IS 500 
 const responseA = await axios.get(`https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m`);
+//Percentage.push(responseA.data[499][1] - responseA.data[498][1]);
 
+//console.log(Percentage)
 if(TempepoxNum.length >= 500)
 {
   var vbv = responseA.data.length -1;
@@ -162,7 +198,7 @@ if(TempepoxNum.length >= 500)
     TempXclose.push(responseA.data[i][4]);
 }
 }
-if(TempepoxNum.length >= 500){
+if(TempCHepoxNum.length >= 500){
   var vbz = responseA.data.length -1;
   TempCHepoxNum.push(responseA.data[vbz][0])
   TempCHXopen.push(responseA.data[vbz][1]);
@@ -179,15 +215,17 @@ if(TempepoxNum.length >= 500){
   TempCHXclose.push(responseA.data[i][4]); 
 }
 }
-console.log('CH-EPOX: ', TempCHepoxNum, 'CH-O: ', TempCHXopen,'CH-H: ', TempCHXhigh,'CH-L: ', TempCHXlow,'CH-C: ', TempCHXclose);
+
+
+//console.log('CH-EPOX: ', TempCHepoxNum, 'CH-O: ', TempCHXopen,'CH-H: ', TempCHXhigh,'CH-L: ', TempCHXlow,'CH-C: ', TempCHXclose);
  
     
-    let valueX = TempXopen.length;
+  //  let valueX = TempXopen.length;
 
-    console.log('EPOX: ', TempepoxNum, 'O: ', TempXopen,'H: ', TempXhigh,'L: ', TempXlow,'C: ', TempXclose);
+    //console.log('EPOX: ', TempepoxNum, 'O: ', TempXopen,'H: ', TempXhigh,'L: ', TempXlow,'C: ', TempXclose);
   
-    console.log('******MASTER X EPOX-NUMBER | OPEN | HIGH | LOW | CLOSE: ',TempCHepoxNum, TempCHXopen , TempCHXhigh, TempXlow, TempCHXclose)
-    console.log('CHECKING THE ARRAY AFTER THE RESPONSE CALL AND DOES NOT EXCCED 1000: ',TempCHXopen.length, 'vs the valueX: ', valueX)
+    //console.log('******MASTER X EPOX-NUMBER | OPEN | HIGH | LOW | CLOSE: ',TempCHepoxNum, TempCHXopen , TempCHXhigh, TempXlow, TempCHXclose)
+    //console.log('CHECKING THE ARRAY AFTER THE RESPONSE CALL AND DOES NOT EXCCED 1000: ',TempCHXopen.length, 'vs the valueX: ', valueX)
 
 
 
@@ -210,19 +248,12 @@ console.log('CH-EPOX: ', TempCHepoxNum, 'CH-O: ', TempCHXopen,'CH-H: ', TempCHXh
 
 for(let i = 0; i < TempXopen.length; i++)
 {
-  
-  if (i !== 0) 
-  {  ThePrice.push(TempXopen[i - 1]);      
-    HighPrice.push(TempXhigh[i - 1]);     
-    LowPrice.push(TempXlow[i - 1]); 
-    ClosePrice.push(TempXclose[i - 1]);
-  }else{
-    ThePrice.push(TempXopen[i]);      
-    HighPrice.push(TempXhigh[i]);     
-    LowPrice.push(TempXlow[i]); 
-    ClosePrice.push(TempXclose[i]);
-  }
-
+  var fff = 0;
+  if (i < 0) {fff = i - 1}else{fff = i}
+    ThePrice.push(TempXopen[fff]);      
+    HighPrice.push(TempXhigh[fff]);     
+    LowPrice.push(TempXlow[fff]); 
+    ClosePrice.push(TempXclose[fff]);
 }
 
 
@@ -259,30 +290,19 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
 //TASK TO PROPOGATE THE KLINE DATA TO THE CHART
 
     for (let i = 0; i < (TempXopen.length); i++) {
-    
-      if(i !== 0){
-        highMA.push(TempXhigh[i-1]) 
-        labels.push(TempepoxNum[i-1]) 
-        open.push(TempXopen[i-1]) 
-        high.push(TempXhigh[i-1]) 
-        close.push(TempXclose[i-1]) 
-        low.push(TempXlow[i-1])  
-        openMA.push(TempXopen[i-1])
-        highMA.push(TempXhigh[i-1])
-        lowMA.push(TempXlow[i-1])
-        closeMA.push(TempXclose[i-1])
-      }else{
-        highMA.push(TempXhigh[i]) 
-        labels.push(TempepoxNum[i]) 
-        open.push(TempXopen[i]) 
-        high.push(TempXhigh[i])
-        close.push(TempXclose[i])
-        low.push(TempXlow[i]) 
-        openMA.push(TempXopen[i])
-        highMA.push(TempXhigh[i])
-        lowMA.push(TempXlow[i])
-        closeMA.push(TempXclose[i])
-      }
+    var ddd = 0;
+      if(i < 0){ddd = i - 1}else{ddd = i}
+        highMA.push(TempXhigh[ddd]) 
+        labels.push(TempepoxNum[ddd]) 
+        open.push(TempXopen[ddd]) 
+        high.push(TempXhigh[ddd]) 
+        close.push(TempXclose[ddd]) 
+        low.push(TempXlow[ddd])  
+        openMA.push(TempXopen[ddd])
+        highMA.push(TempXhigh[ddd])
+        lowMA.push(TempXlow[ddd])
+        closeMA.push(TempXclose[ddd])
+      
 
       
       if (i === (number - 1)) {
@@ -299,7 +319,7 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
 ////////////////////////////////******//BEGINING OF THE NEURAL NETWORK//*********
 
 // THE OPEN PRICE NEURAL NETWORK PREDICTION BRAIN #1
-    const CenterOpenBrain = [];
+    const OpenPredictedResult = [];
     //prepare fetch different position from array to insert in the push STILL IN ACTIVE DEVELOPEMENT LAYER@2.0.0
     for (let i = 0; i < TempXopen.length; i++) {
     var a = i + 4;//5 start array
@@ -318,7 +338,7 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
 
 
     var sss = TempXopen.length - 1
-      CenterOpenBrain.push({
+      OpenPredictedResult.push({
 		  input: {
         hgha: TempXhigh[a] * globalNormValu,
         hghb: TempXhigh[b] * globalNormValu,
@@ -352,19 +372,19 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
       //console.log('BRAIN OPEN PRICE TRAINING ARRAY : ', CenterOpenBrain)
 
       
-      OpNNPredictorBrain.train(CenterOpenBrain, {
+      OpNNPredictorBrain.train(OpenPredictedResult, {
         iterations: 20500,
-        errorThresh: 0.005,
+        errorThresh: 0.05,
         log: false,
         learningRate: 0.29,
         momentum: momentum,
-        hiddenLayers: [10, 10], // array of ints for the sizes of the hidden layers in the network
+        hiddenLayers: [50], // array of ints for the sizes of the hidden layers in the network
         activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
         leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
            });
           
            
-           const CenterOpenResult = OpNNPredictorBrain.run({
+           const BrainOpenPrResult = OpNNPredictorBrain.run({
 
             hgha: TempXhigh[sss-5] * globalNormValu,
             hghb: TempXhigh[sss-4] * globalNormValu,
@@ -389,11 +409,11 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
                     });
 
 // THE HIGH PRICE NEURAL NETWORK PREDICTION BRAIN #2
-                             const RightHighBrain = [];
+                             const HighPredictedResult = [];
                              for (let i = 0; i < TempXhigh.length; i++) {
 
          
-                               RightHighBrain.push({
+                               HighPredictedResult.push({
                                 input: {
                                   opa: TempXopen[a] * globalNormValu,
                                   opb: TempXopen[b] * globalNormValu,
@@ -426,16 +446,16 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
                              }
                              //console.log('BRAIN HIGH PRICE TRAINING ARRAY : ', RightHighBrain)
                       
-                             HighPredictionBrain.train(RightHighBrain, {
-                                 errorThresh: 0.005,
+                             HighPredictionBrain.train(HighPredictedResult, {
+                                 errorThresh: 0.05,
                                  log: false, 
                                  learningRate: 0.29,
                                  momentum: momentum,
-                                 hiddenLayers: [10, 10], // array of ints for the sizes of the hidden layers in the network
+                                 hiddenLayers: [50], // array of ints for the sizes of the hidden layers in the network
                                  activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
                                  leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
                                 });
-                                const RightHighResult = HighPredictionBrain.run({
+                                const BrainHighPrResult = HighPredictionBrain.run({
          
                                   opa: TempXopen[sss-5] * globalNormValu,
                                   opb: TempXopen[sss-4] * globalNormValu,
@@ -458,10 +478,10 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
                                  });
 
  // THE LOW PRICE NEURAL NETWORK PREDICTION BRAIN #3
-                    const LeftLowBrain = [];
+                    const LowPredictedResult = [];
                     for (let i = 0; i < TempXlow.length; i++) {
 
-                      LeftLowBrain.push({
+                      LowPredictedResult.push({
                         input: {
                           opa: TempXopen[a] * globalNormValu,
                           opb: TempXopen[b] * globalNormValu,
@@ -493,16 +513,16 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
                       })
                     }
                     //console.log('BRAIN LOW PRICE TRAINING ARRAY :', LeftLowBrain)
-                    LowPredictionBrain.train(LeftLowBrain, {
-                        errorThresh: 0.005,
+                    LowPredictionBrain.train(LowPredictedResult, {
+                        errorThresh: 0.05,
                         log: false, 
                         learningRate: 0.29,
                         momentum: momentum,
-                        hiddenLayers: [10, 10], // array of ints for the sizes of the hidden layers in the network
+                        hiddenLayers: [50], // array of ints for the sizes of the hidden layers in the network
                         activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
                         leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
                        });
-                       const LeftLowResult = LowPredictionBrain.run({
+                       const BrainLowPrResult = LowPredictionBrain.run({
 
                          opa: TempXopen[sss-5] * globalNormValu,
                         opb: TempXopen[sss-4] * globalNormValu,
@@ -525,10 +545,10 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
                         });
 
 // THE CLOSE PRICE NEURAL NETWORK PREDICTION BRAIN #4
-                    const CenterCloseBrain = [];
+                    const ClosePredictedResult = [];
                     for (let i = 0; i < TempXclose.length; i++) {
 
-                      CenterCloseBrain.push({
+                      ClosePredictedResult.push({
                         input: {
                           opa: TempXopen[a] * globalNormValu,
                           opb: TempXopen[b] * globalNormValu,
@@ -560,16 +580,16 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
                       })
                     }
                    // console.log('BRAIN CLOSE PRICE TRAINING ARRAY : ', CenterCloseBrain)
-                    ClosePredictionBrain.train(CenterCloseBrain, {
-                        errorThresh: 0.005,
+                    ClosePredictionBrain.train(ClosePredictedResult, {
+                        errorThresh: 0.05,
                         log: false, 
                         learningRate: 0.29,
                         momentum: momentum,
-                        hiddenLayers: [10, 10], // array of ints for the sizes of the hidden layers in the network
+                        hiddenLayers: [50], // array of ints for the sizes of the hidden layers in the network
                         activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
                         leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
                        });
-                       const CenterCloseResult = ClosePredictionBrain.run({
+                       const BrainClosePrResult = ClosePredictionBrain.run({
 
                         opa: TempXopen[sss-5] * globalNormValu,
                         opb: TempXopen[sss-4] * globalNormValu,
@@ -595,15 +615,35 @@ console.log('CLOSE PRICE: ',TempXclose[0], '-: ', ClosePrice[ClosePrice.length -
 
 /*======================================================================*/
 /////////////////////// THE FOUR MAIN PREDICTION RESULT HERE*******
-  OpenBrainResulta.push(CenterOpenResult.opf / globalNormValu);
-  OpenBrainResultb.push(CenterOpenResult.opb / globalNormValu);
-  OpenBrainResultc.push(CenterOpenResult.opc / globalNormValu);
-  OpenBrainResultd.push(CenterOpenResult.opd / globalNormValu);
-  OpenBrainResulte.push(CenterOpenResult.ope / globalNormValu);
-  OpenBrainResultf.push(CenterOpenResult.opa / globalNormValu);
-  HighBrainResult.push(RightHighResult.hghf / globalNormValu);
-  LowBrainResult.push(LeftLowResult.lwf / globalNormValu);
-  CloseBrainResult.push(CenterCloseResult.clf / globalNormValu);
+OpenBrainResulta.push(BrainOpenPrResult.opa / globalNormValu);
+HighBrainResulta.push(BrainHighPrResult.hgha / globalNormValu);
+LowBrainResulta.push(BrainLowPrResult.lwa / globalNormValu);
+CloseBrainResulta.push(BrainClosePrResult.cla / globalNormValu);
+
+OpenBrainResultb.push(BrainOpenPrResult.opb / globalNormValu);
+HighBrainResultb.push(BrainHighPrResult.hghb / globalNormValu);
+LowBrainResultb.push(BrainLowPrResult.lwb / globalNormValu);
+CloseBrainResultb.push(BrainClosePrResult.clb / globalNormValu);
+
+OpenBrainResultc.push(BrainOpenPrResult.opc / globalNormValu);
+HighBrainResultc.push(BrainHighPrResult.hghc / globalNormValu);
+LowBrainResultc.push(BrainLowPrResult.lwc / globalNormValu);
+CloseBrainResultc.push(BrainClosePrResult.clc / globalNormValu);
+
+OpenBrainResultd.push(BrainOpenPrResult.opd / globalNormValu);
+HighBrainResultd.push(BrainHighPrResult.hghd / globalNormValu);
+LowBrainResultd.push(BrainLowPrResult.lwd / globalNormValu);
+CloseBrainResultd.push(BrainClosePrResult.cld / globalNormValu);
+
+OpenBrainResulte.push(BrainOpenPrResult.ope / globalNormValu);
+HighBrainResulte.push(BrainHighPrResult.hghe / globalNormValu);
+LowBrainResulte.push(BrainLowPrResult.lwe / globalNormValu);
+CloseBrainResulte.push(BrainClosePrResult.cle / globalNormValu);
+
+OpenBrainResultf.push(BrainOpenPrResult.opf / globalNormValu);
+HighBrainResultf.push(BrainHighPrResult.hghf / globalNormValu);
+LowBrainResultf.push(BrainLowPrResult.lwf / globalNormValu);
+CloseBrainResultf.push(BrainClosePrResult.clf / globalNormValu);
   //console.log('OPEN BRAIN, HIGH BRAIN LOW BRAIN CLOSE BRAIN OHLC RESULT: ', OpenBrainResulta, HighBrainResult, LowBrainResult, CloseBrainResult)
   
 ////PREP PRICES FOR PREDICTION CHART TO FETCH ONLY THE LATESS PRICE AND DO SOME TASKS...
@@ -614,38 +654,46 @@ const highResult =[];
 const lowResult =[];
 const closeResult =[];
 
-for(let i = 0; i < TempCHepoxNum.length; i++)
+for(let i = 0; i < OpenBrainResultf.length; i++)
 {   
-  epoxResult.push(TempCHepoxNum[i - 1]);     
+  var ppp = 0;
+ // if(i>0){ppp = 499 + i - 1}else{ppp = 499 + i}
+  if(i < 1) {ppp = 499}
+  if(i === 1){ppp = 500}
+  if(i > 1){ppp = i + 499}
+  epoxResult.push(TempCHepoxNum[ppp]);     
 
-  openResult.push(TempCHXopen[i - 1]);     
+  openResult.push(TempCHXopen[ppp]);     
 
-  highResult.push(TempCHXhigh[i - 1]);     
+  highResult.push(TempCHXhigh[ppp]);     
 
-  lowResult.push(TempCHXlow[i - 1]);      
+  lowResult.push(TempCHXlow[ppp]);      
 
-  closeResult.push(TempCHXclose[i - 1]);      
+  closeResult.push(TempCHXclose[ppp]);      
 }
-console.log("Epox Number: ", epoxResult[epoxResult.length -1], 'OPEN R: ', openResult[openResult.length -1], 'HIGH R: ', highResult[highResult.length -1], 'LOW R: ', lowResult[lowResult.length -1], 'CLOSE R: ', closeResult[closeResult.length -1]);
+//console.log("Epox Number: ", epoxResult, 'OPEN R: ', openResult, 'HIGH R: ', highResult, 'LOW R: ', lowResult, 'CLOSE R: ', closeResult);
 
 ////OPEN BRAIN RESULT TASK
   const openBrainResult =[];
 
-for(let i = 0; i < positionOfArray ; i++) 
+for(let i = 0; i < OpenBrainResultf.length ; i++) 
 {
-  openBrainResult.push(OpenBrainResulta[i-1])    
+  var jjj = 0;
+  if(i<0){jjj = i - 1}else{jjj = i}
+  openBrainResult.push(OpenBrainResultf[jjj])    
 }
   //console.log("OPEN PREDICTED; ", openBrainResult);
 
 ////PREPAIR AVERAGE BETWEEN THE OPEN LATESS PRICE AND THE OPEN PREDICTED
   const AvgElem1OpenOpen = [];
   const Elem1 = [];
-for(let i = 0; i < OpenBrainResulta.length; i++) {
-  var elemOf1 = i;
+for(let i = 0; i < OpenBrainResultf.length; i++) {
+  var elemOf1 = 0;
+  if(i > 0){elemOf1 = i - 1}else{elemOf1 = i}
 //console.log(elemOf1);
   let elemOf1B = openBrainResult[elemOf1] * globalNormValu;
 //console.log('PREDICTED OPEN: ', elemOf1B);
-  let elemOf1C = TempCHXopen[elemOf1] * globalNormValu;
+  let elemOf1C = openResult[elemOf1] * globalNormValu;
 //console.log('OPEN MARKET PRICE: ', elemOf1C);
        Elem1.push([(elemOf1C + elemOf1B) * 0.000005] / 0.0000000001); // must hand boum it lol for now! it's a simple average but has lots of depth 
         AvgElem1OpenOpen.push(Elem1);
@@ -660,21 +708,23 @@ if(AvgElem1OpenOpen.length <= i) {AvgElem1OpenOpen.push(Elem1[i])}else{}
   const highBrainResult = [];
 
   
-  for(let i = 0; i < positionOfArray; i++) 
+  for(let i = 0; i < HighBrainResultf.length; i++) 
   {
-    highBrainResult.push(HighBrainResult[i-1])
+    var kkk = 0;
+    if(i<0){kkk = i - 1}else{kkk = i}
+    highBrainResult.push(HighBrainResultf[kkk])
   }
   //console.log("HIGH PREDICTED : ", highBrainResult);
 
       ////PREPAIR AVERAGE BETWEEN THE HIGH LATESS PRICE AND THE HIGH PREDICTED PRICE
 const AvgElem2HighHigh = [];
 const Elem2 = [];
-for(let i = 0; i < HighBrainResult.length; i++) {
-var elemOf2 = i;
-//console.log(elemOf2);
+for(let i = 0; i < HighBrainResultf.length; i++) {
+var elemOf2 = 0;
+if(i > 0){elemOf2 = i - 1}else{elemOf2 = i}
 let elemOf2B = highBrainResult[elemOf2] * globalNormValu;
 //console.log('PREDICTED HIGH : ', elemOf2B);
-let elemOf2C = TempCHXhigh[elemOf2] * globalNormValu;
+let elemOf2C = highResult[elemOf2] * globalNormValu;
 //console.log('HIGH MARKET PRICE: ', elemOf2C);
 Elem2.push([(elemOf2C + elemOf2B) * 0.000005] / 0.0000000001);
 AvgElem2HighHigh.push(Elem2);
@@ -686,9 +736,11 @@ if(AvgElem2HighHigh.length <= i) {AvgElem2HighHigh.push(Elem2[i])}else{}
 ////LOW BRAIN RESULT TASK 
   const lowBrainResult = [];
   
-  for(let i = 0; i < positionOfArray; i++) 
+  for(let i = 0; i < LowBrainResultf.length; i++) 
   {
-    lowBrainResult.push(LowBrainResult[i-1]) 
+    var hhh = 0;
+    if(i<0){hhh = i - 1}else{hhh = i};
+    lowBrainResult.push(LowBrainResultf[hhh]) 
   }
   //console.log("LOW PREDICTED : ", lowBrainResult);
   
@@ -696,12 +748,13 @@ if(AvgElem2HighHigh.length <= i) {AvgElem2HighHigh.push(Elem2[i])}else{}
 ////PREPAIR AVERAGE BETWEEN THE LOW LATESS PRICE AND THE LOW PREDICTED PRICE
 const AvgElem3LowLow = [];
 const Elem3 = [];
-for(let i = 0; i < LowBrainResult.length; i++) {
-var elemOf3 = i;
+for(let i = 0; i < LowBrainResultf.length; i++) {
+var elemOf3 = 0;
+if(i > 0){elemOf3 = i - 1}else{elemOf3 = i}
 //console.log(elemOf3);
 let elemOf3B = lowBrainResult[elemOf3] * globalNormValu;
 //console.log('PREDICTED LOW: ', elemOf3B);
-let elemOf3C = TempCHXlow[elemOf3] * globalNormValu;
+let elemOf3C = lowResult[elemOf3] * globalNormValu;
 //console.log('LOW MARKET PRICE: ', elemOf3C);
 Elem3.push([(elemOf3C + elemOf3B) * 0.000005] / 0.0000000001);
 AvgElem3LowLow.push(Elem3);
@@ -713,9 +766,11 @@ if(AvgElem3LowLow.length <= i) {AvgElem3LowLow.push(Elem2[i])}else{}
 ////CLOSE BRAIN RESULT TASK
   const closeBrainResult = [];
 
-  for(let i = 0; i < positionOfArray; i++) 
+  for(let i = 0; i < CloseBrainResultf.length; i++) 
   {
-    closeBrainResult.push(CloseBrainResult[i-1])
+    var ggg = 0;
+    if(i<0){ggg =i - 1}else{ggg = i}
+    closeBrainResult.push(CloseBrainResultf[ggg])
   }
   //console.log("CLOSE PREDICTED : ", closeBrainResult);
 
@@ -724,11 +779,11 @@ const AvgElem4CloseClose = [];
 const Elem4 = [];
 
 for(let i = 0; i < closeBrainResult.length; i++) {
-var elemOf4 = i;
-//console.log(elemOf4);
+var elemOf4 = 0;
+if(i > 0){elemOf4 = i - 1}else{elemOf4 = i}
 let elemOf4B = closeBrainResult[elemOf4] * globalNormValu;
 //console.log('PREDICTED CLOSE: ', elemOf4B);
-let elemOf4C = TempCHXclose[elemOf4] * globalNormValu;
+let elemOf4C = closeResult[elemOf4] * globalNormValu;
 
 //console.log('CLOSE MARKET PRICE: ', elemOf4C);
 Elem4.push([(elemOf4B + elemOf4C) * 0.000005] / 0.0000000001);
@@ -749,14 +804,14 @@ if(AvgElem4CloseClose.length <= i) {AvgElem4CloseClose.push(Elem4[i])}else{}
 //console.log(masterXopen[valueX] - OpenBrainResulta[0])
  //const OpenPredicted = [];
 
- const LowPredicted = [LowBrainResult[positionOfArray - 1] - LowPrice[positionOfArray - 1]];
- const RealLow = [LowPrice[positionOfArray - 1] - LowBrainResult[positionOfArray - 1]];
+ const LowPredicted = [LowBrainResultf[positionOfArray - 1] - LowPrice[positionOfArray - 1]];
+ const RealLow = [LowPrice[positionOfArray - 1] - LowBrainResultf[positionOfArray - 1]];
 
- const HghPredicted = [HighBrainResult[positionOfArray - 1] - HighPrice[positionOfArray - 1]]
- const RealHigh = [HighPrice[positionOfArray - 1] - HighBrainResult[positionOfArray - 1]];
+ const HghPredicted = [HighBrainResultf[positionOfArray - 1] - HighPrice[positionOfArray - 1]]
+ const RealHigh = [HighPrice[positionOfArray - 1] - HighBrainResultf[positionOfArray - 1]];
 
- const ClsPredicted = [CloseBrainResult[positionOfArray - 1] - ClosePrice[positionOfArray - 1]];
- const RealClose = [ClosePrice[positionOfArray - 1] - CloseBrainResult[positionOfArray - 1]];
+ const ClsPredicted = [CloseBrainResultf[positionOfArray - 1] - ClosePrice[positionOfArray - 1]];
+ const RealClose = [ClosePrice[positionOfArray - 1] - CloseBrainResultf[positionOfArray - 1]];
 
  const RvsPredicted = [ThePrice[positionOfArray - 1] - OpenBrainResulta[positionOfArray - 1]];
  //const PvsReal = [OpenBrainResult[0] - FinalPriceArray];
@@ -768,24 +823,340 @@ if(AvgElem4CloseClose.length <= i) {AvgElem4CloseClose.push(Elem4[i])}else{}
                          LOW LATESS WITH LOW PREDICTED IS ELEM 3
                          CLOSE LATESS WITH CLOSE PREDICTED IS ELEM 4 
  */
- const midOP = [];
- 
+ const MASTERCORE = [];
+ //console.log('************:', openResult, ' and :', highResult, 'and :', lowResult, 'and:', closeResult)
  for(let i = 0; i < highBrainResult.length; i++) 
  {
-    midOP.push((HighBrainResult[i] + OpenBrainResulta[i] + CloseBrainResult[i] + LowBrainResult[i] + Elem1[i] + Elem2[i] + Elem3[i] + Elem4[i]) / 8)
- }
-  //console.log("midleLine: ",midOP)
+   var lll = 0;
+   if(i < 0){lll = i - 1}else{lll = i};
+   var I = HighBrainResultf[lll] * globalNormValu;
+   var II = OpenBrainResultf[lll] * globalNormValu;
+   var III = CloseBrainResultf[lll] * globalNormValu;
+   var IV = LowBrainResultf[lll] * globalNormValu;
+   var V = Elem1[lll] * globalNormValu;
+   var VI = Elem2[lll] * globalNormValu;
+   var VII = Elem3[lll] * globalNormValu;
+   var VIII = Elem4[lll] * globalNormValu;
+   var IX = openResult[lll] * globalNormValu;
+   var X = highResult[lll] * globalNormValu;
+   var XI = lowResult[lll] * globalNormValu;
+   var XII = closeResult[lll] * globalNormValu; 
+
+    MASTERCORE.push((((I + II + III + IV + V + VI + VII + VIII + IX + X + XI + XII) / globalNormValu) / 12))
+   // console.log('************:', Elem1[lll], ' and :', Elem2[lll], 'and :', Elem3[lll], 'and:', Elem4[lll])
+  }
+ // console.log("midleLine: ",midOP)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const latessOPvs8Lines = [];
+const predictedOPvs8Lines = [];
+const subLatessOPvsPredicted = [];
+const myAvgOPBoxFinalResult = [];
+const myAvgOPBoxFinalResultB = [];
+const myAvgOPBoxFinalResultI = [];
+const myAvgOPBoxFinalResultIB = [];
+
+//console.log(myAvgBoxFinalResultB)
+//console.log('ARRAY TEST-------predicted---vs---subLatess---: ', predictedCloseVS8Lines, '<:>', subLatessClVSPredicted)
+
+const myAvgOPBoxI = [];
+const myAvgOPBoxResultI = [];
+for(let i = 0; i < OpenBrainResultf.length; i++){
+  var oooo = 0;
+  if(i<0){oooo = i - 1}else{oooo = i};
+  let ddso = MASTERCORE[oooo] * 0.00001;
+  let ssdo = OpenBrainResultf[oooo] * 0.00001;
+
+  predictedOPvs8Lines.push(((ddso + ssdo)  / 0.00001) / 2);
+  myAvgOPBoxI.push(predictedOPvs8Lines[i]); //collect result in this box...
+  myAvgOPBoxResultI.push(myAvgOPBoxI.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgOPBoxI.length);
+let sddso = myAvgOPBoxResultI[oooo] * 0.00001;
+myAvgOPBoxFinalResultI.push(((ddso + sddso)  / 0.00001) / 2);
+myAvgOPBoxFinalResultIB.push(((ssdo + sddso)  / 0.00001) / 2);
+
+  //console.log(predictedCloseVS8Lines[i]);
+  //console.log('added ooo******', ((dds + ssd)  / 0.00001) / 2);
+}
+const myAvgOPBox = [];
+const myAvgOPBoxResult = [];
+
+for(let i = 0; i < OpenBrainResultf.length; i++){
+  var arrayPos = 0;
+  if(i<0){arrayPos = i - 1}else{arrayPos = i};
+
+  let coreO = MASTERCORE[arrayPos] * 0.00001;
+  let openRlt = openResult[arrayPos] * 0.00001;
+
+  latessOPvs8Lines.push(((coreO + openRlt)  / 0.00001) / 2);
+  myAvgOPBox.push(latessOPvs8Lines[i]);
+
+  myAvgOPBoxResult.push(myAvgOPBox.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgOPBox.length);
+  let AccAvg = myAvgOPBoxResult[arrayPos] * 0.00001;
+  myAvgOPBoxFinalResult.push(((coreO + AccAvg)  / 0.00001) / 2);
+  myAvgOPBoxFinalResultB.push(((openRlt + AccAvg)  / 0.00001) / 2);
+ 
+ // console.log('added opo******', ((sds + dsd)  / 0.00001) / 2);
+}
+
+//console.log(latessCloseVS8Lines, '******VS*****', predictedCloseVS8Lines);
 
 
+/* 
+  if(i < 1) {ppp = 499}
+  if(i === 1){ppp = 500}
+  if(i > 1){ppp = i + 499}
+*/
+
+for(let i = 0; i < latessOPvs8Lines.length; i++){
+  var mmmo = 0;
+  if(i < 1) {mmmo = 0}
+  if(i === 1){mmmo = 1}
+  if(i > 1){mmmo = i }
+  let mnmo = latessOPvs8Lines[mmmo];
+  let nmno = predictedOPvs8Lines[mmmo]
+  subLatessOPvsPredicted.push(mnmo - nmno)
+
+  //console.log('SHOULD FLUTUATE VERY NEAR THE ZERO LINE (creating a wave)', subLatessClVSPredicted)
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const latessHGHvs8Lines = [];
+const predictedHGHvs8Lines = [];
+const subLatessHGHvsPredicted = [];
+const myAvgHGHBoxFinalResult = [];
+const myAvgHGHBoxFinalResultB = [];
+const myAvgHGHBoxFinalResultI = [];
+const myAvgHGHBoxFinalResultIB = [];
+
+//console.log(myAvgBoxFinalResultB)
+//console.log('ARRAY TEST-------predicted---vs---subLatess---: ', predictedCloseVS8Lines, '<:>', subLatessClVSPredicted)
+
+const myAvgHGHBoxI = [];
+const myAvgHGHBoxResultI = [];
+for(let i = 0; i < HighBrainResultf.length; i++){
+  var oooh = 0;
+  if(i<0){oooh = i - 1}else{oooh = i};
+  let ddsh = MASTERCORE[oooh] * 0.00001;
+  let ssdh = HighBrainResultf[oooh] * 0.00001;
+
+  predictedHGHvs8Lines.push(((ddsh + ssdh)  / 0.00001) / 2);
+  myAvgHGHBoxI.push(predictedHGHvs8Lines[i]);
+  myAvgHGHBoxResultI.push(myAvgHGHBoxI.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgHGHBoxI.length);
+let sddsh = myAvgHGHBoxResultI[oooh] * 0.00001;
+myAvgHGHBoxFinalResultI.push(((ddsh + sddsh)  / 0.00001) / 2);
+myAvgHGHBoxFinalResultIB.push(((ssdh + sddsh)  / 0.00001) / 2);
+
+  //console.log(predictedCloseVS8Lines[i]);
+  //console.log('added ooo******', ((dds + ssd)  / 0.00001) / 2);
+}
+const myAvgHGHBox = [];
+const myAvgHGHBoxResult = [];
+for(let i = 0; i < HighBrainResultf.length; i++){
+  var oporr = 0;
+  if(i<0){oporr = i - 1}else{oporr = i};
+  let sdssh = MASTERCORE[oporr] * 0.00001;
+  let dsddh = highResult[oporr] * 0.00001;
+  latessHGHvs8Lines.push(((sdssh + dsddh)  / 0.00001) / 2);
+  myAvgHGHBox.push(latessHGHvs8Lines[i]);
+  myAvgHGHBoxResult.push(myAvgHGHBox.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgHGHBox.length);
+  let dssdh = myAvgHGHBoxResult[oporr] * 0.00001;
+  myAvgHGHBoxFinalResult.push(((sdssh + dssdh)  / 0.00001) / 2);
+  myAvgHGHBoxFinalResultB.push(((dsddh + dssdh)  / 0.00001) / 2);
+ 
+ // console.log('added opo******', ((sds + dsd)  / 0.00001) / 2);
+}
+
+//console.log(latessCloseVS8Lines, '******VS*****', predictedCloseVS8Lines);
+
+
+/* 
+  if(i < 1) {ppp = 499}
+  if(i === 1){ppp = 500}
+  if(i > 1){ppp = i + 499}
+*/
+
+for(let i = 0; i < latessHGHvs8Lines.length; i++){
+  var mmmh = 0;
+  if(i < 1) {mmmh = 0}
+  if(i === 1){mmmh = 1}
+  if(i > 1){mmmh = i }
+  let mnmh = latessHGHvs8Lines[mmmh];
+  let nmnh = predictedHGHvs8Lines[mmmh]
+  subLatessHGHvsPredicted.push(mnmh - nmnh)
+
+  //console.log('SHOULD FLUTUATE VERY NEAR THE ZERO LINE (creating a wave)', subLatessClVSPredicted)
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const latessLWvs8Lines = [];
+const predictedLWvs8Lines = [];
+const subLatessLWvsPredicted = [];
+const myAvgLWBoxFinalResult = [];
+const myAvgLWBoxFinalResultB = [];
+const myAvgLWBoxFinalResultI = [];
+const myAvgLWBoxFinalResultIB = [];
+
+//console.log(myAvgBoxFinalResultB)
+//console.log('ARRAY TEST-------predicted---vs---subLatess---: ', predictedCloseVS8Lines, '<:>', subLatessClVSPredicted)
+
+const myAvgLWBoxI = [];
+const myAvgLWBoxResultI = [];
+for(let i = 0; i < LowBrainResultf.length; i++){
+  var oool = 0;
+  if(i<0){oool = i - 1}else{oool = i};
+  let dds = MASTERCORE[oool] * 0.00001;
+  let ssd = LowBrainResultf[oool] * 0.00001;
+
+  predictedLWvs8Lines.push(((dds + ssd)  / 0.00001) / 2);
+  myAvgLWBoxI.push(predictedLWvs8Lines[i]);
+  myAvgLWBoxResultI.push(myAvgLWBoxI.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgLWBoxI.length);
+let sdds = myAvgLWBoxResultI[oool] * 0.00001;
+myAvgLWBoxFinalResultI.push(((dds + sdds)  / 0.00001) / 2);
+myAvgLWBoxFinalResultIB.push(((ssd + sdds)  / 0.00001) / 2);
+
+  //console.log(predictedCloseVS8Lines[i]);
+  //console.log('added ooo******', ((dds + ssd)  / 0.00001) / 2);
+}
+const myAvgLWBox = [];
+const myAvgLWBoxResult = [];
+for(let i = 0; i < LowBrainResultf.length; i++){
+  var opor = 0;
+  if(i<0){opor = i - 1}else{opor = i};
+  let sdss = MASTERCORE[opor] * 0.00001;
+  let dsdd = lowResult[opor] * 0.00001;
+  latessLWvs8Lines.push(((sdss + dsdd)  / 0.00001) / 2);
+  myAvgLWBox.push(latessLWvs8Lines[i]);
+  myAvgLWBoxResult.push(myAvgLWBox.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgLWBox.length);
+  let dssd = myAvgLWBoxResult[opor] * 0.00001;
+  myAvgLWBoxFinalResult.push(((sdss + dssd)  / 0.00001) / 2);
+  myAvgLWBoxFinalResultB.push(((dsdd + dssd)  / 0.00001) / 2);
+ 
+ // console.log('added opo******', ((sds + dsd)  / 0.00001) / 2);
+}
+
+//console.log(latessCloseVS8Lines, '******VS*****', predictedCloseVS8Lines);
+
+
+/* 
+  if(i < 1) {ppp = 499}
+  if(i === 1){ppp = 500}
+  if(i > 1){ppp = i + 499}
+*/
+
+for(let i = 0; i < latessLWvs8Lines.length; i++){
+  var mmmr = 0;
+  if(i < 1) {mmmr = 0}
+  if(i === 1){mmmr = 1}
+  if(i > 1){mmmr = i }
+  let mnm = latessLWvs8Lines[mmmr];
+  let nmn = predictedLWvs8Lines[mmmr]
+  subLatessLWvsPredicted.push(mnm - nmn)
+
+  //console.log('SHOULD FLUTUATE VERY NEAR THE ZERO LINE (creating a wave)', subLatessClVSPredicted)
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const latessCLVS8Lines = [];
+const predictedCLVS8Lines = [];
+const subLatessCLVSPredicted = [];
+const myAvgCLBoxFinalResult = [];
+const myAvgCLBoxFinalResultB = [];
+const myAvgCLBoxFinalResultI = [];
+const myAvgCLBoxFinalResultIB = [];
+
+//console.log(myAvgBoxFinalResultB)
+//console.log('ARRAY TEST-------predicted---vs---subLatess---: ', predictedCloseVS8Lines, '<:>', subLatessClVSPredicted)
+
+const myAvgBoxI = [];
+const myAvgBoxResultI = [];
+for(let i = 0; i < CloseBrainResultf.length; i++){
+  var ooo = 0;
+  if(i<0){ooo = i - 1}else{ooo = i};
+  let dds = MASTERCORE[ooo] * 0.00001;
+  let ssd = CloseBrainResultf[ooo] * 0.00001;
+
+  predictedCLVS8Lines.push(((dds + ssd)  / 0.00001) / 2);
+  myAvgBoxI.push(predictedCLVS8Lines[i]);
+  myAvgBoxResultI.push(myAvgBoxI.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgBoxI.length);
+let sdds = myAvgBoxResultI[ooo] * 0.00001;
+myAvgCLBoxFinalResultI.push(((dds + sdds)  / 0.00001) / 2);
+myAvgCLBoxFinalResultIB.push(((ssd + sdds)  / 0.00001) / 2);
+
+  //console.log(predictedCloseVS8Lines[i]);
+  //console.log('added ooo******', ((dds + ssd)  / 0.00001) / 2);
+}
+const myAvgBox = [];
+const myAvgBoxResult = [];
+for(let i = 0; i < CloseBrainResultf.length; i++){
+  var opo = 0;
+  if(i<0){opo = i - 1}else{opo = i};
+  let sds = MASTERCORE[opo] * 0.00001;
+  let dsd = closeResult[opo] * 0.00001;
+  latessCLVS8Lines.push(((sds + dsd)  / 0.00001) / 2);
+  myAvgBox.push(latessCLVS8Lines[i]);
+  myAvgBoxResult.push(myAvgBox.reduce(function (sum, value) {
+    return sum + value;
+}, 0) / myAvgBox.length);
+  let dssd = myAvgBoxResult[opo] * 0.00001;
+  myAvgCLBoxFinalResult.push(((sds + dssd)  / 0.00001) / 2);
+  myAvgCLBoxFinalResultB.push(((dsd + dssd)  / 0.00001) / 2);
+ 
+ // console.log('added opo******', ((sds + dsd)  / 0.00001) / 2);
+}
+
+//console.log(latessCloseVS8Lines, '******VS*****', predictedCloseVS8Lines);
+
+
+/* 
+  if(i < 1) {ppp = 499}
+  if(i === 1){ppp = 500}
+  if(i > 1){ppp = i + 499}
+*/
+
+for(let i = 0; i < latessCLVS8Lines.length; i++){
+  var mmm = 0;
+  if(i < 1) {mmm = 0}
+  if(i === 1){mmm = 1}
+  if(i > 1){mmm = i }
+  let mnm = latessCLVS8Lines[mmm];
+  let nmn = predictedCLVS8Lines[mmm]
+  subLatessCLVSPredicted.push(mnm - nmn)
+
+  //console.log('SHOULD FLUTUATE VERY NEAR THE ZERO LINE (creating a wave)', subLatessClVSPredicted)
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////******BEGINNING OF LAYER TWO NEURAL NETWORK*** */
 // LAYER TWO  NETWORK PREDICTION BRAIN #1 OF #4  LayerIIOpenResult
 const LayerIIOpenBrain = [];
 for (let i = 0; i < OpenBrainResulta.length; i++) {
 
-  LayerIIOpenBrain.unshift({
+  LayerIIOpenBrain.push({
   input: {
 
-       avergl: midOP[i] * globalNormValu,
+       avergl: MASTERCORE[i] * globalNormValu,
           elm2: Elem2[i] * globalNormValu,
           elm3: Elem3[i] * globalNormValu,
           elm4: Elem4[i] * globalNormValu,
@@ -807,7 +1178,7 @@ for (let i = 0; i < OpenBrainResulta.length; i++) {
 //console.log('LAYER TWO TARGET PRICE **OPEN** TRAINING ARRAY : ', LayerIIOpenBrain)
 OpenReAquiredTarget.train(LayerIIOpenBrain, {
     errorThresh: 0.005,
-    log: true, 
+    log: false, 
     learningRate: 0.29,
     momentum: momentum,
     hiddenLayers: [10], // array of ints for the sizes of the hidden layers in the network
@@ -818,7 +1189,7 @@ OpenReAquiredTarget.train(LayerIIOpenBrain, {
    //console.log(el)
    const LayerIIOPBrainResult = OpenReAquiredTarget.run(
      {
-       avergl: midOP[el] * globalNormValu,
+       avergl: MASTERCORE[el] * globalNormValu,
           elm2: Elem2[el] * globalNormValu,
           elm3: Elem3[el] * globalNormValu,
           elm4: Elem4[el] * globalNormValu,
@@ -840,9 +1211,9 @@ OpenReAquiredTarget.train(LayerIIOpenBrain, {
 const LayerIIHighBrainPrice = [];
 for (let i = 0; i < OpenBrainResulta.length; i++) {
 
-  LayerIIHighBrainPrice.unshift({
+  LayerIIHighBrainPrice.push({
   input: {
-        avergl: midOP[i] * globalNormValu,
+        avergl: MASTERCORE[i] * globalNormValu,
           elm1: Elem1[i] * globalNormValu,
           elm3: Elem3[i] * globalNormValu,
           elm4: Elem4[i] * globalNormValu,
@@ -865,7 +1236,7 @@ for (let i = 0; i < OpenBrainResulta.length; i++) {
 //console.log('LAYER TWO TARGET PRICE **HIGH** TRAINING ARRAY : ', LayerIIHighBrainPrice)
 OpenReAquiredTargetHG.train(LayerIIHighBrainPrice, {
     errorThresh: 0.005,
-    log: true, 
+    log: false, 
     learningRate: 0.29,
     momentum: momentum,
     hiddenLayers: [10], // array of ints for the sizes of the hidden layers in the network
@@ -876,7 +1247,7 @@ OpenReAquiredTargetHG.train(LayerIIHighBrainPrice, {
    //console.log(el)
    const LayerIIHGBrainResult = OpenReAquiredTargetHG.run(
      {
-       avergl: midOP[el] * globalNormValu,
+       avergl: MASTERCORE[el] * globalNormValu,
          elm1: Elem1[el] * globalNormValu,
          elm3: Elem3[el] * globalNormValu,
          elm4: Elem4[el] * globalNormValu,
@@ -898,9 +1269,9 @@ OpenReAquiredTargetHG.train(LayerIIHighBrainPrice, {
 const LayerIILowBrainPrice = [];
 for (let i = 0; i < OpenBrainResulta.length; i++) {
 
-  LayerIILowBrainPrice.unshift({
+  LayerIILowBrainPrice.push({
   input: {
-       avergl: midOP[i] * globalNormValu,
+       avergl: MASTERCORE[i] * globalNormValu,
 
           elm1: Elem1[i] * globalNormValu,
           elm2: Elem2[i] * globalNormValu,
@@ -921,10 +1292,10 @@ for (let i = 0; i < OpenBrainResulta.length; i++) {
     }
   })
 }
-console.log('LAYER TWO TARGET PRICE **LOW** TRAINING ARRAY : ', LayerIILowBrainPrice)
+//console.log('LAYER TWO TARGET PRICE **LOW** TRAINING ARRAY : ', LayerIILowBrainPrice)
 OpenReAquiredTargetLW.train(LayerIILowBrainPrice, {
     errorThresh: 0.005,
-    log: true, 
+    log: false, 
     learningRate: 0.29,
     momentum: momentum,
     hiddenLayers: [10], // array of ints for the sizes of the hidden layers in the network
@@ -935,7 +1306,7 @@ OpenReAquiredTargetLW.train(LayerIILowBrainPrice, {
    //console.log(el)
    const LayerIILWBrainResult = OpenReAquiredTargetLW.run(
      {
-        avergl: midOP[el] * globalNormValu,
+        avergl: MASTERCORE[el] * globalNormValu,
           elm1: Elem1[el] * globalNormValu,
           elm2: Elem2[el] * globalNormValu,
           elm4: Elem4[el] * globalNormValu,
@@ -957,9 +1328,9 @@ OpenReAquiredTargetLW.train(LayerIILowBrainPrice, {
 const LayerIICloseBrainPrice = [];
 for (let i = 0; i < OpenBrainResulta.length; i++) {
 
-  LayerIICloseBrainPrice.unshift({
+  LayerIICloseBrainPrice.push({
   input: {
-       avergl: midOP[i] * globalNormValu,
+       avergl: MASTERCORE[i] * globalNormValu,
 
           elm1: Elem1[i] * globalNormValu,
           elm2: Elem2[i] * globalNormValu,
@@ -983,7 +1354,7 @@ for (let i = 0; i < OpenBrainResulta.length; i++) {
 //console.log('LAYER TWO TARGET PRICE **CLOSE** TRAINING ARRAY : ', LayerIICloseBrainPrice)
 OpenReAquiredTargetCL.train(LayerIICloseBrainPrice, {
     errorThresh: 0.005,
-    log: true, 
+    log: false, 
     learningRate: 0.29,
     momentum: momentum,
     hiddenLayers: [10], // array of ints for the sizes of the hidden layers in the network
@@ -994,7 +1365,7 @@ OpenReAquiredTargetCL.train(LayerIICloseBrainPrice, {
    //console.log(el)
    const LayerIICLBrainResult = OpenReAquiredTargetCL.run(
      {
-       avergl: midOP[el] * globalNormValu,
+       avergl: MASTERCORE[el] * globalNormValu,
 
           elm1: Elem1[el] * globalNormValu,
           elm2: Elem2[el] * globalNormValu,
@@ -1016,7 +1387,7 @@ OpenReAquiredTargetCL.train(LayerIICloseBrainPrice, {
 /////////////////////////////////////////////////////////////////////
 //ZERO LINE
 function ZeroLine() {
-  var x = midOP[el] - midOP[el]// this equals zero //lol :)
+  var x = MASTERCORE[el] - MASTERCORE[el]// this equals zero //lol :)
   theZeroLine.push(x)
 }
 ZeroLine()
@@ -1055,7 +1426,7 @@ openMomentumY()
 //latess high price - the elem2
 HighMomentumX.push(HighPrice[el] - Elem2[el]);
 //console.log(HighMomentumX);
-HighVsMomentum.push(HighPrice[el] - HighBrainResult[el]);
+HighVsMomentum.push(HighPrice[el] - HighBrainResultf[el]);
 //console.log(HighVsMomentum);
 function highMomentumX() {
 
@@ -1080,14 +1451,16 @@ function highMomentumY() {
   
 }
 highMomentumY()
+/*
 console.log('/////////////////***HIGH MARKET VS HIGH PREDICTED/////////////////////////')
 console.log('###-X-MomXHighMesurement: ', MomXHighMesurement, ' AND: ', MomentumXHigh)
 console.log('###-Y-MomYHighMesurement: ', MomYHighMesurement, ' AND: ', MomentumYHigh)
 console.log('//////////////////////////////////////////////////////////////////////////')
+*/
 //latess low price - the elem3
 LowMomentumX.push(LowPrice[el] - Elem3[el]);
 //console.log(LowMomentumX);
-LowVsMomentum.push(LowPrice[el] - LowBrainResult[el]);
+LowVsMomentum.push(LowPrice[el] - LowBrainResultf[el]);
 //console.log(LowVsMomentum);
 function lowMomentumX() {
 
@@ -1112,14 +1485,16 @@ function lowMomentumY() {
   
 }
 lowMomentumY()
+/*
 console.log('/////////////////***LOW MARKET VS LOW PREDICTED/////////////////////////')
 console.log('###-X-MomXLowMesurement: ', MomXLowMesurement, ' AND: ', MomentumXLow)
 console.log('###-Y-MomYLowMesurement: ', MomYLowMesurement, ' AND: ', MomentumYLow)
 console.log('////////////////////////////////////////////////////////////////////////')
+*/
 //latess close price - the elem4
 CloseMomentumX.push(ClosePrice[el] - Elem4[el]);
 //console.log(CloseMomentumX);
-CloseVsMomentum.push(ClosePrice[el] - CloseBrainResult[el]);  
+CloseVsMomentum.push(ClosePrice[el] - CloseBrainResultf[el]);  
 //console.log(CloseVsMomentum);
 function closeMomentumX() {
 
@@ -1144,11 +1519,12 @@ function closeMomentumY() {
   
 }
 closeMomentumY()
+/*
 console.log('/////////////////***CLOSE MARKET VS CLOSE PREDICTED/////////////////////////')
 console.log('###-X-MomXCloseMesurement: ', MomXCloseMesurement, ' AND: ', MomentumXClose)
 console.log('###-Y-MomYCloseMesurement: ', MomYCloseMesurement, ' AND: ', MomentumYClose)
 console.log('////////////////////////////////////////////////////////////////////////////')
-
+*/
     //INITIALIZE SOME ARRAYS FOR TASKS
 
     const thePrice = [];
@@ -1158,7 +1534,7 @@ console.log('///////////////////////////////////////////////////////////////////
 
     
     //THE TASKS TO PROPOGATE THE DATA FOR THOSE INITIAL ARRAYS 
-    for (let i = 0; i < (CloseBrainResult.length); i++){
+    for (let i = 0; i < (CloseBrainResultf.length); i++){
           thePrice.push(ThePrice[i]);   
           highPrice.push(HighPrice[i]);  
           lowPrice.push(LowPrice[i]); 
@@ -1201,20 +1577,20 @@ for (let i = 0; i < (ClosePrice.length); i++)
 //console.log('THE LATESS LOW PRICE: ', ChartLatessLP);
 //console.log('THE LATESS CLOSE PRICE: ', ChartLatessCP);
 //latest open price and the elem1 - midOP
-OpenP1.push(ChartLatessOP[el] - midOP[el]);
-ElemP1.push(Elem1[el] - midOP[el]);
+OpenP1.push(ChartLatessOP[el] - MASTERCORE[el]);
+ElemP1.push(Elem1[el] - MASTERCORE[el]);
 //latest high price and  the elem2 - midOP
 
-HighP2.push(ChartLatessHP[el] - midOP[el]);
-ElemP2.push(Elem2[el] - midOP[el]);
+HighP2.push(ChartLatessHP[el] - MASTERCORE[el]);
+ElemP2.push(Elem2[el] - MASTERCORE[el]);
 //latest low price and  the elem3 - midOP
 
-LowP3.push(ChartLatessLP[el] - midOP[el]);
-ElemP3.push(Elem3[el] - midOP[el]);
+LowP3.push(ChartLatessLP[el] - MASTERCORE[el]);
+ElemP3.push(Elem3[el] - MASTERCORE[el]);
 //latest open close and  the elem4 - midOP
 
-CloseP4.push(ChartLatessCP[el] - midOP[el]);
-ElemP4.push(Elem4[el] - midOP[el]);
+CloseP4.push(ChartLatessCP[el] - MASTERCORE[el]);
+ElemP4.push(Elem4[el] - MASTERCORE[el]);
 
 //ZeroLine.push(midOP[el] - midOP[el]);
 
@@ -1229,18 +1605,18 @@ mouthFloorSize.push(LowPrice[el] - Elem3[el]);
 //console.log(mouthFloorSize)
  
 TongueSize.push(HighPrice[el] - LowPrice[el]);
-console.log(TongueSize.length)
+//console.log(TongueSize.length)
 
-BrOpToNewOp.push(Elem1[el] - OpenBrainResulta[el]);
+BrOpToNewOp.push(Elem1[el] - OpenBrainResultf[el]);
 //console.log(BrOpToNewOp);
 //
-BrHgToNewHg.push(Elem2[el] - HighBrainResult[el]);
+BrHgToNewHg.push(Elem2[el] - HighBrainResultf[el]);
 //console.log(BrHgToNewHg);
 //
-BrLwToNewLw.push(Elem3[el] - LowBrainResult[el]);
+BrLwToNewLw.push(Elem3[el] - LowBrainResultf[el]);
 //console.log(BrLwToNewLw);
 //
-BrClToNewCl.push(Elem4[el] - CloseBrainResult[el]);
+BrClToNewCl.push(Elem4[el] - CloseBrainResultf[el]);
 //console.log(BrClToNewCl);
 
 //////////////////////////PREP ARRAYS TO SNAP SHOT NO MORE THEN 10 POSITIONS FROM LATESS AS START POINT AND A TALE OF 10 TICKS FOR CHART VIEWING CONVINIENCE
@@ -1254,8 +1630,9 @@ const xTicks = increment[positionOfArray]
       payload: {
     
          xTicks,
+        // Percentage,
          number,
-         midOP,
+         MASTERCORE,
        // epoxDate,
         // epoxArray,
         OpenVsMomentum,
@@ -1345,10 +1722,70 @@ const xTicks = increment[positionOfArray]
         BrLwToNewLw,
         BrClToNewCl,
             
-         OpenBrainResulta,
-         CloseBrainResult,
-         HighBrainResult,
-         LowBrainResult,
+        OpenBrainResulta,
+        CloseBrainResulta,
+        HighBrainResulta,
+        LowBrainResulta,
+
+        OpenBrainResultb,
+        CloseBrainResultb,
+        HighBrainResultb,
+        LowBrainResultb,
+
+        OpenBrainResultc,
+        CloseBrainResultc,
+        HighBrainResultc,
+        LowBrainResultc,
+
+        OpenBrainResultd,
+        CloseBrainResultd,
+        HighBrainResultd,
+        LowBrainResultd,
+
+        OpenBrainResulte,
+        CloseBrainResulte,
+        HighBrainResulte,
+        LowBrainResulte,
+            
+         OpenBrainResultf,
+         CloseBrainResultf,
+         HighBrainResultf,
+         LowBrainResultf,
+
+        latessOPvs8Lines,
+        predictedOPvs8Lines,
+        myAvgOPBoxFinalResult,
+        myAvgOPBoxFinalResultB,
+        myAvgOPBoxFinalResultI,
+        myAvgOPBoxFinalResultIB,
+
+        latessHGHvs8Lines,
+        predictedHGHvs8Lines,
+        myAvgHGHBoxFinalResult,
+        myAvgHGHBoxFinalResultB,
+        myAvgHGHBoxFinalResultI,
+        myAvgHGHBoxFinalResultIB,
+
+         latessCLVS8Lines,
+         predictedCLVS8Lines,
+         myAvgCLBoxFinalResult,
+         myAvgCLBoxFinalResultB,
+         myAvgCLBoxFinalResultI,
+         myAvgCLBoxFinalResultIB,
+
+         latessLWvs8Lines,
+         predictedLWvs8Lines,
+         myAvgLWBoxFinalResult,
+         myAvgLWBoxFinalResultB,
+         myAvgLWBoxFinalResultI,
+         myAvgLWBoxFinalResultIB ,
+
+         subLatessOPvsPredicted,
+         subLatessHGHvsPredicted,
+         subLatessLWvsPredicted,
+         subLatessCLVSPredicted,
+
+         //avgLatessClVSPredicted,
 
         TempepoxNum,
         TempXopen,
@@ -1377,10 +1814,7 @@ const xTicks = increment[positionOfArray]
   }
 }
 
-
-
-
-
+export default mailBox;
 
 
 

@@ -12,7 +12,16 @@ const initalState = {
       options: {
         responsive: true
       }
-    }]
+    }],
+    options : {
+      yAxes: [{
+          ticks: {
+              min: 0,
+              max: 55,
+              stepSize: 1
+          }
+      }]
+  }
   },
   dataC: {
     labels: [],
@@ -142,6 +151,21 @@ const initalState = {
       
     },
     dataCLOSE: {
+      labels: [],
+      datasets: [{
+        type: 'line',
+        label: "BOT CHART PREDICTION",
+        data: [],
+        backgroundColor: 'rgba(226, 153, 18, 0.9)',
+        borderColor: 'rgba(178, 116, 0, 1)',
+        pointBorderColor: 'rgba(25, 16, 0, 1)',
+        options: {
+          responsive: true
+        }
+      }],
+      
+    }, 
+    dataTimeTwist: {
       labels: [],
       datasets: [{
         type: 'line',
@@ -307,6 +331,13 @@ closeSlmnRslt
                                  ],
                                  options: {
                                    responsive: true,
+                                   yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 55,
+                                        stepSize: 1
+                                    }
+                                }],
                                    scales: {
                                     x: {
                                       type: 'realtime',
@@ -380,7 +411,7 @@ closeSlmnRslt
                     {
                       type: 'line',
                       label: "All 4 PREDICTED MOVING AVERAGE",
-                      data: payload.midOP,
+                      data: payload.MASTERCORE,
                       backgroundColor: 'rgba(255, 113, 16, 0.7)',
                       borderColor: 'rgba(255, 113, 16, 0.9)',
                       pointBorderColor: 'rgba(255, 113, 16, 0.9)',
@@ -558,84 +589,46 @@ closeSlmnRslt
                                     pointBorderColor: 'rgba(255, 113, 16, 1)',
                                     order: 9
                                     },
-
-                  ]
-                },   
-                
-                dataG: {
-                  labels:payload.epoxResult,
-                  datasets: [
-                    {
-                      type: 'line',
-                      label: "LATESS OPEN PRICE ABOVE OR BELOW ELEM-1",
-                      data: payload.OpenMomentumX,
-                      backgroundColor: 'rgba(255, 0, 0, 1)',
-                      borderColor: 'rgba(0, 0, 0, 0.8)',
-                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                      order: 5
-                      },            
-                      {
-                      type: 'line',
-                      label: "LATESS HIGH PRICE ABOVE OR BELOW ELEM-2",
-                      data: payload.HighMomentumX,
-                      backgroundColor: 'rgba(22, 91, 160, 1)',
-                      borderColor: 'rgba(0, 0, 0, 0.8)',
-                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                      order: 6
-                      },
-                      {
-                      type: 'line',
-                      label: "LATESS LOW PRICE ABOVE OR BELOW ELEM-3",
-                      data: payload.LowMomentumX,
-                      backgroundColor: 'rgba(255, 255, 0, 0.7)',
-                      borderColor: 'rgba(0, 0, 0, 0.8)',
-                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                      order: 7
-                      },
-                      {
-                      type: 'line',
-                      label: "LATESS CLOSE PRICE ABOVE OR BELOW ELEM-4",
-                      data: payload.CloseMomentumX,
-                      backgroundColor: 'rgba(0,177,64, 1)',
-                      borderColor: 'rgba(0, 0, 0, 0.8)',
-                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                      order: 8
-                      },
+                                   ]
+                                   },
+                  dataG: {
+                    labels:payload.epoxResult,
+                     datasets: [
                       {
                         type: 'line',
-                        label: "OPEN VS MOMENTUM ",
-                        data: payload.OpenVsMomentum,
+                        label: "sub-Latess-OPEN-vs-Predicted",
+                        data: payload.subLatessOPvsPredicted,
                         backgroundColor: 'rgba(255, 0, 0, 0.4)',
                         borderColor: 'rgba(255, 0, 0, 0.9)',
                         pointBorderColor: 'rgba(25, 16, 0, 1)',
-                        order: 9
-                        },            
+                        order: 1,
+                      },
                         {
-                        type: 'line',
-                        label: "HIGH VS MOMENTUM",
-                        data: payload.HighVsMomentum,
-                        backgroundColor: 'rgba(22, 91, 160, 1)',
-                        borderColor: '	rgba(22, 91, 160, 0.9)',
-                        pointBorderColor: 'rgba(22, 91, 160, 1)',
-                        order: 10
+                          type: 'line',
+                          label: "sub-Latess-CL0SE-vs-Predicted",
+                          data: payload.subLatessCLVSPredicted,
+                          backgroundColor: 'rgba(255, 113, 16, 0.7)',
+                          borderColor: 'rgba(0,177,64, 1)',
+                          pointBorderColor: 'rgba(0,177,64, 1)',
+                          order: 2,
                         },
                         {
-                        type: 'line',
-                        label: "LOW VS MOMENTUM",
-                        data: payload.LowVsMomentum,
-                        backgroundColor: 'rgba(255, 255, 0, 0.7)',
-                        borderColor: 'rgba(255, 255, 0, 0.9)',
-                        pointBorderColor: 'rgba(255, 255, 0, 1)',
-                        order: 11
+                          type: 'line',
+                          label: "sub-latess-HIGH-vs-Predicted",
+                          data: payload.subLatessHGHvsPredicted,
+                          backgroundColor: 'rgba(22, 91, 160, 0.7)',
+                          borderColor: '	rgba(22, 91, 160, 0.9)',
+                          pointBorderColor: 'rgba(22, 91, 160, 1)',
+                          order: 3,
                         },
                         {
-                        type: 'line',
-                        label: "CLOSE VS MOMENTUM",
-                        data: payload.CloseVsMomentum,
-                        backgroundColor: 'rgba(0,177,64, 1)',
-                        borderColor: 'rgba(0,177,64, 1)',
-                        pointBorderColor: 'rgba(0,177,64, 1)',
-                        order: 12
+                          type: "line",
+                          label: "sub-Latess-LOW-vs-Predicted" ,
+                          data: payload.subLatessLWvsPredicted,                        
+                          backgroundColor: 'rgba(255, 255, 0, 1)',
+                          borderColor: 'rgba(0, 0, 0, 0.8)',
+                          pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                          order: 4,
                         },
                         {
                           type: 'line',
@@ -644,25 +637,26 @@ closeSlmnRslt
                           backgroundColor: 'rgba(255, 113, 16, 1)',
                           borderColor: 'rgba(255, 113, 16, 1)',
                           pointBorderColor: 'rgba(255, 113, 16, 1)',
-                          order: 13
+                          order: 5
                           },
-                  ]
-                },
+                         ]
+                         },
                 dataOPEN: {
                   labels: payload.epoxResult,
-                  datasets: [{
-                    type: "line",
-                    label: "BTC LATESS OPEN PRICE" ,
-                    data: payload.openResult,                        
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    borderColor: 'rgba(0, 0, 0, 0.8)',
-                    pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
-                    order: 1,
-                  },
+                   datasets: [
+                     {
+                      type: "line",
+                      label: "BTC LATESS OPEN PRICE" ,
+                      data: payload.openResult,                        
+                      backgroundColor: 'rgba(255, 0, 0, 1)',
+                      borderColor: 'rgba(0, 0, 0, 0.8)',
+                      pointBorderColor: 'rgba(0, 0, 0 , 0.8)',
+                      order: 1,
+                     },
                   {
                     type: 'line',
                     label: "PREDICTED OPEN",
-                    data: payload.OpenBrainResulta,
+                    data: payload.OpenBrainResultf,
                     backgroundColor: 'rgba(255, 0, 0, 0.4)',
                     borderColor: 'rgba(255, 0, 0, 0.9)',
                     pointBorderColor: 'rgba(25, 16, 0, 1)',
@@ -671,25 +665,85 @@ closeSlmnRslt
 
                   {
                     type: 'line',
-                    label: "8 LINES PREDICTED MOVING AVERAGE",
-                    data: payload.midOP,
+                    label: "12 LINES CORE AVERAGE",
+                    data: payload.MASTERCORE,
                     backgroundColor: 'rgba(255, 113, 16, 0.7)',
                     borderColor: 'rgba(255, 113, 16, 0.9)',
                     pointBorderColor: 'rgba(255, 113, 16, 0.9)',
                     order: 3,
                   },
-                  {
-                    type: 'line',
-                    label: "AVERAGE OF LATESS CLOSE VS PREDICTED CLOSE",
-                    data: payload.Elem4,
-                    backgroundColor: 'rgba(0,177,64, 1)',
-                    borderColor: 'rgba(0,177,64, 1)',
-                    pointBorderColor: 'rgba(0,177,64, 1)',
-                    order: 4,
-                  },
                 ]
-                  
               },
+              dataTimeTwistOPEN: {
+                labels: payload.epoxResult,
+                datasets: [
+              {
+                type: 'line',
+                label: "***OPEN BRAIN RESULT AVG WITH CORE LINES***  ",
+                data: payload.predictedOPvs8Lines,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(255, 0, 0, 1)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',
+                order: 1,
+              },
+              {
+                type: 'line',
+                label: "***OPEN LATESS RESULT AVG WITH CORE LINES***",
+                data: payload.latessOPvs8Lines,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.8)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',
+                order: 2,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***CORE***",
+                data: payload.myAvgOPBoxFinalResultI,
+                backgroundColor: 'rgba(255, 0, 0, 1)',
+                borderColor: 'rgba(255, 255, 255, 1)',
+                pointBorderColor: 'rgba(255, 0, 0, 1)',
+                order: 3,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***PREDICTED***",
+                data: payload.myAvgOPBoxFinalResultIB,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(255, 255, 255, 1)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',  
+                order: 4,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND LATESS OPEN (AVG/MINUTES) verses ***CORE***",
+                data: payload.myAvgOPBoxFinalResult,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.4)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',
+                order: 5,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND LATESS OPEN (AVG/MINUTES) verses ***LATESS OPEN***",
+                data: payload.myAvgOPBoxFinalResultB,
+                backgroundColor: 'rgba(255, 0, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.4)',
+                pointBorderColor: 'rgba(255, 0, 0, 1)',
+                order: 6,
+              },           
+
+           // subLatessLWvsPredicted
+            {
+              type: 'line',
+              label: "12 LINES CORE AVERAGE",
+              data: payload.MASTERCORE,
+              backgroundColor: 'rgba(255, 113, 16, 0.7)',
+              borderColor: 'rgba(255, 113, 16, 0.9)',
+              pointBorderColor: 'rgba(255, 255, 0, 1)',
+              order: 7,
+            },
+          ]
+        },
               dataHIGH: {
                 labels: payload.epoxResult,
                 datasets: [{
@@ -704,7 +758,7 @@ closeSlmnRslt
                 {
                   type: 'line',
                   label: "PREDICTED HIGH",
-                  data: payload.HighBrainResult,
+                  data: payload.HighBrainResultf,
                   backgroundColor: 'rgba(22, 91, 160, 0.7)',
                   borderColor: '	rgba(22, 91, 160, 0.9)',
                   pointBorderColor: 'rgba(22, 91, 160, 1)',
@@ -712,16 +766,83 @@ closeSlmnRslt
                 },
                 {
                   type: 'line',
-                  label: "8 LINES PREDICTED MOVING AVERAGE",
-                  data: payload.midOP,
+                  label: "12 LINES CORE AVERAGE",
+                  data: payload.MASTERCORE,
                   backgroundColor: 'rgba(255, 113, 16, 0.7)',
                   borderColor: 'rgba(255, 113, 16, 0.9)',
                   pointBorderColor: 'rgba(255, 113, 16, 0.9)',
                   order: 3,
                 },
               ]
-                
             },
+            dataTimeTwistHIGH: {
+              labels: payload.epoxResult,
+              datasets: [
+                {
+                  type: 'line',
+                  label: "***HIGH BRAIN RESULT AVG WITH CORE LINES***  ",
+                  data: payload.predictedHGHvs8Lines,
+                  backgroundColor: 'rgba(255, 120, 0, 1)',
+                  borderColor: 'rgba(22, 91, 160, 1)',
+                  pointBorderColor: 'rgba(255, 120, 0, 1)',
+                  order: 1,
+                },
+                {
+                  type: 'line',
+                  label: "***HIGH LATESS RESULT AVG WITH CORE LINES***",
+                  data: payload.latessHGHvs8Lines,
+                  backgroundColor: 'rgba(255, 120, 0, 1)',
+                  borderColor: 'rgba(0, 0, 0, 0.8)',
+                  pointBorderColor: 'rgba(255, 120, 0, 1)',
+                  order: 2,
+                },
+                {
+                  type: 'line',
+                  label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***CORE***",
+                  data: payload.myAvgHGHBoxFinalResultI,
+                  backgroundColor: 'rgba(22, 91, 160, 1)',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  pointBorderColor: 'rgba(22, 91, 160, 1)',
+                  order: 3,
+                },
+                {
+                  type: 'line',
+                  label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***PREDICTED***",
+                  data: payload.myAvgHGHBoxFinalResultIB,
+                  backgroundColor: 'rgba(255, 120, 0, 1)',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  pointBorderColor: 'rgba(255, 120, 0, 1)',  
+                  order: 4,
+                },
+                {
+                  type: 'line',
+                  label: "***ACCUMULATED AVERAGE OF CORE AND LATESS HIGH (AVG/MINUTES) verses ***CORE***",
+                  data: payload.myAvgHGHBoxFinalResult,
+                  backgroundColor: 'rgba(255, 120, 0, 1)',
+                  borderColor: 'rgba(0, 0, 0, 0.4)',
+                  pointBorderColor: 'rgba(255, 120, 0, 1)',
+                  order: 5,
+                },
+                {
+                  type: 'line',
+                  label: "***ACCUMULATED AVERAGE OF CORE AND LATESS HIGH (AVG/MINUTES) verses ***LATESS HIGH***",
+                  data: payload.myAvgHGHBoxFinalResultB,
+                  backgroundColor: 'rgba(22, 91, 160, 1)',
+                  borderColor: 'rgba(0, 0, 0, 0.4)',
+                  pointBorderColor: 'rgba(22, 91, 160, 1)',
+                  order: 6,
+                },
+              {
+                type: 'line',
+                label: "12 LINES CORE AVERAGE",
+                data: payload.MASTERCORE,
+                backgroundColor: 'rgba(255, 113, 16, 0.7)',
+                borderColor: 'rgba(255, 113, 16, 0.9)',
+                pointBorderColor: 'rgba(255, 255, 0, 1)',
+                order: 7,
+              },
+        ]
+      },
             dataLOW: {
               labels: payload.epoxResult,
               datasets: [{
@@ -736,7 +857,7 @@ closeSlmnRslt
               {
                 type: 'line',
                 label: "PREDICTED LOW",
-                data: payload.LowBrainResult,
+                data: payload.LowBrainResultf,
                 backgroundColor: 'rgba(255, 255, 0, 0.7)',
                 borderColor: 'rgba(255, 255, 0, 0.9)',
                 pointBorderColor: 'rgba(255, 255, 0, 1)',
@@ -744,16 +865,83 @@ closeSlmnRslt
               },
               {
                 type: 'line',
-                label: "8 LINES PREDICTED MOVING AVERAGE",
-                data: payload.midOP,
+                label: "12 LINES CORE AVERAGE",
+                data: payload.MASTERCORE,
                 backgroundColor: 'rgba(255, 113, 16, 0.7)',
                 borderColor: 'rgba(255, 113, 16, 0.9)',
                 pointBorderColor: 'rgba(255, 113, 16, 0.9)',
                 order: 3,
               },
             ]
-              
           },
+          dataTimeTwistLOW: {
+            labels: payload.epoxResult,
+            datasets: [
+              {
+                type: 'line',
+                label: "***LOW BRAIN RESULT AVG WITH CORE LINES***  ",
+                data: payload.predictedLWvs8Lines,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(255, 255, 0, 1)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',
+                order: 1,
+              },
+              {
+                type: 'line',
+                label: "***LOW LATESS RESULT AVG WITH CORE LINES***",
+                data: payload.latessLWvs8Lines,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.8)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',
+                order: 2,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***CORE***",
+                data: payload.myAvgLWBoxFinalResultI,
+                backgroundColor: 'rgba(255, 255, 0, 1)',
+                borderColor: 'rgba(255, 255, 255, 1)',
+                pointBorderColor: 'rgba(255, 255, 0, 1)',
+                order: 3,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***PREDICTED***",
+                data: payload.myAvgLWBoxFinalResultIB,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(255, 255, 255, 1)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',  
+                order: 4,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND LATESS LOW (AVG/MINUTES) verses ***CORE***",
+                data: payload.myAvgLWBoxFinalResult,
+                backgroundColor: 'rgba(255, 120, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.4)',
+                pointBorderColor: 'rgba(255, 120, 0, 1)',
+                order: 5,
+              },
+              {
+                type: 'line',
+                label: "***ACCUMULATED AVERAGE OF CORE AND LATESS LOW (AVG/MINUTES) verses ***LATESS LOW***",
+                data: payload.myAvgLWBoxFinalResultB,
+                backgroundColor: 'rgba(255, 255, 0, 1)',
+                borderColor: 'rgba(0, 0, 0, 0.4)',
+                pointBorderColor: 'rgba(255, 255, 0, 1)',
+                order: 6,
+              },
+            {
+              type: 'line',
+              label: "12 LINES CORE AVERAGE",
+              data: payload.MASTERCORE,
+              backgroundColor: 'rgba(255, 113, 16, 0.7)',
+              borderColor: 'rgba(255, 113, 16, 0.9)',
+              pointBorderColor: 'rgba(255, 255, 0, 1)',
+              order: 7,
+            },
+          ]
+        },
           dataCLOSE: {
             labels: payload.epoxResult,
             datasets: [
@@ -769,7 +957,7 @@ closeSlmnRslt
             {
               type: 'line',
               label: "PREDICTED CLOSE",
-              data: payload.CloseBrainResult,
+              data: payload.CloseBrainResultf,
               backgroundColor: 'rgba(0,177,64, 1)',
               borderColor: 'rgba(0,177,64, 1)',
               pointBorderColor: 'rgba(0,177,64, 1)',
@@ -777,8 +965,8 @@ closeSlmnRslt
             },
             {
               type: 'line',
-              label: "8 LINES PREDICTED MOVING AVERAGE",
-              data: payload.midOP,
+              label: "12 LINES CORE AVERAGE",
+              data: payload.MASTERCORE,
               backgroundColor: 'rgba(255, 113, 16, 0.7)',
               borderColor: 'rgba(255, 113, 16, 0.9)',
               pointBorderColor: 'rgba(255, 113, 16, 0.9)',
@@ -787,27 +975,74 @@ closeSlmnRslt
           ]
             
         },
-                /*
-      MomentumXOpen,
-      MomentumYOpen,
-      MomXOpenMesurement,
-      MomYOpenMesurement,
-
-      MomentumXHigh,
-      MomXHighMesurement,
-      MomentumYHigh,
-      MomYHighMesurement,
-
-      MomentumXLow,
-      MomXLowMesurement,
-      MomentumYLow,
-      MomYLowMesurement,
-
-      MomentumXClose,
-      MomXCloseMesurement,
-      MomentumYClose,
-      MomYCloseMesurement,
-                */ 
+        dataTimeTwist: {
+          labels: payload.epoxResult,
+          datasets: [
+            {
+              type: 'line',
+              label: "***CLOSE BRAIN RESULT AVG WITH CORE LINES***  ",
+              data: payload.predictedCLVS8Lines,
+              backgroundColor: 'rgba(255, 120, 0, 1)',
+              borderColor: 'rgba(0,177,64, 1)',
+              pointBorderColor: 'rgba(255, 120, 0, 1)',
+              order: 1,
+            },
+            {
+              type: 'line',
+              label: "***CLOSE LATESS RESULT AVG WITH CORE LINES***",
+              data: payload.latessCLVS8Lines,
+              backgroundColor: 'rgba(255, 120, 0, 1)',
+              borderColor: 'rgba(0, 0, 0, 0.8)',
+              pointBorderColor: 'rgba(255, 120, 0, 1)',
+              order: 2,
+            },
+            {
+              type: 'line',
+              label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***CORE***",
+              data: payload.myAvgCLBoxFinalResultI,
+              backgroundColor: 'rgba(0,177,64, 1)',
+              borderColor: 'rgba(255, 255, 255, 1)',
+              pointBorderColor: 'rgba(0,177,64, 1)',
+              order: 3,
+            },
+            {
+              type: 'line',
+              label: "***ACCUMULATED AVERAGE OF CORE AND PREDICTED (AVG/MINUTES) verses ***PREDICTED***",
+              data: payload.myAvgCLBoxFinalResultIB,
+              backgroundColor: 'rgba(255, 120, 0, 1)',
+              borderColor: 'rgba(255, 255, 255, 1)',
+              pointBorderColor: 'rgba(255, 120, 0, 1)',  
+              order: 4,
+            },
+            {
+              type: 'line',
+              label: "***ACCUMULATED AVERAGE OF CORE AND LATESS CLOSE (AVG/MINUTES) verses ***CORE***",
+              data: payload.myAvgCLBoxFinalResult,
+              backgroundColor: 'rgba(255, 120, 0, 1)',
+              borderColor: 'rgba(0, 0, 0, 0.4)',
+              pointBorderColor: 'rgba(255, 120, 0, 1)',
+              order: 5,
+            },
+            {
+              type: 'line',
+              label: "***ACCUMULATED AVERAGE OF CORE AND LATESS CLOSE (AVG/MINUTES) verses ***LATESS CLOSE***",
+              data: payload.myAvgCLBoxFinalResultB,
+              backgroundColor: 'rgba(0,177,64, 1)',
+              borderColor: 'rgba(0, 0, 0, 0.4)',
+              pointBorderColor: 'rgba(0,177,64, 1)',
+              order: 6,
+            },
+          {
+            type: 'line',
+            label: "12 LINES CORE AVERAGE ",
+            data: payload.MASTERCORE,
+            backgroundColor: 'rgba(255, 113, 16, 0.7)',
+            borderColor: 'rgba(255, 113, 16, 0.9)',
+            pointBorderColor: 'rgba(255, 255, 0, 1)',
+            order: 7,
+          },
+        ]
+      }, 
                 dataH: {
                    exports : [
                     {
@@ -844,7 +1079,7 @@ closeSlmnRslt
                       },
                       {
                       type: 'line',
-                      label: "MESUREMENT OF CLOSE PRICE TREND FORCE VS 0",
+                      label: "MESUREMENT OF CLOSE PRICE TREND FORCE VS 0",  
                       data: payload.MomYCloseMesurement,
                       backgroundColor: 'rgba(0,177,64, 1)',
                       borderColor: 'rgba(0,177,64, 1)',
@@ -860,56 +1095,11 @@ closeSlmnRslt
                           pointBorderColor: 'rgba(255, 113, 16, 1)',
                           order: 9
                           },
-                      /*
-                      {
-                        type: 'line',
-                        label: "OPEN VS MOMENTUM ",
-                        data: payload.OpenVsMomentum,
-                        backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                        borderColor: 'rgba(255, 0, 0, 0.9)',
-                        pointBorderColor: 'rgba(25, 16, 0, 1)',
-                        order: 9
-                        },            
-                        {
-                        type: 'line',
-                        label: "HIGH VS MOMENTUM",
-                        data: payload.HighVsMomentum,
-                        backgroundColor: 'rgba(22, 91, 160, 1)',
-                        borderColor: '	rgba(22, 91, 160, 0.9)',
-                        pointBorderColor: 'rgba(22, 91, 160, 1)',
-                        order: 10
-                        },
-                        {
-                        type: 'line',
-                        label: "LOW VS MOMENTUM",
-                        data: payload.LowVsMomentum,
-                        backgroundColor: 'rgba(255, 255, 0, 0.7)',
-                        borderColor: 'rgba(255, 255, 0, 0.9)',
-                        pointBorderColor: 'rgba(255, 255, 0, 1)',
-                        order: 11
-                        },
-                        {
-                        type: 'line',
-                        label: "CLOSE VS MOMENTUM",
-                        data: payload.CloseVsMomentum,
-                        backgroundColor: 'rgba(0,177,64, 1)',
-                        borderColor: 'rgba(0,177,64, 1)',
-                        pointBorderColor: 'rgba(0,177,64, 1)',
-                        order: 12
-                        },
-                        */
-                  ]
-                  
-                },
-                
-  
-              }
-            
-               default: return state;
-              }
-               
-           }
-           
- 
-           export default brainReducer;
+                        ]
+                      },
+                    }
+                     default: return state;
+                     }
+                     }
+                      export default brainReducer;
 

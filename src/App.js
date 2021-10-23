@@ -61,14 +61,14 @@ function App() {
   if(percentMoveC >= 1) {percD.push(closePer + percentMoveC)}else{percD.push(closePer - percentMoveC)};
 
 console.log(percA, percB, percC, percD)
-*/
+
 
  const openV = initA / 4;
   const highV = initA / 4;
   const lowV = initA / 4;
   const closeV = initA / 4;
  
-
+*/
   //console.log(openV, highV, lowV, closeV)
   //const [inMarketAmount, setNewAmount] = React.useState(openV);
   const [InitAmountopen, setInitAmountOP] = React.useState(() => initA / 4);
