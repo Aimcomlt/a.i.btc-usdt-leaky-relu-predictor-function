@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {Chart} from 'chart.js';
+import walletGoodImage from './gallery/walletGoodImage.png';
+import Signature from './gallery/Signature.png';
+import brainImage2 from './gallery/brainImage2.png'
 //import { Linking } from 'react-native';
 import './App.css';
 import { Line } from 'react-chartjs-2';
@@ -30,47 +33,28 @@ function App() {
     const percentMoveC = [];
     const MoveC = [];
 
-  const [initA] = React.useState(100);
-/*
-  const percA = [];
-  percA.push(percentMoveO)
-  /*
-  function foo() {
-    return percA.push(0)
-  }
-  foo()
-  
- // console.log(openPer)
-  for(let i = 0; i < percA.length; i++){
-    var openPer = percA[i];
-    if(percentMoveO > 1) {percA.push(openPer + percentMoveO)};
-    if(percentMoveO < 1) {percA.push(openPer - percentMoveO)};
-  }
+    const equationO = [];
+    //const equationH = [];
+    //const equationL = [];
+    //const equationC = [];
+
+    //console.log(equationO)
 
 
-  const percB = [];
-  var highPer = percB;
-  if(percentMoveH >= 1) {percB.push(highPer + percentMoveH)}else{percB.push(highPer - percentMoveH)};
+  const [initA] = React.useState(() => 100);
+  //console.log(initA)
 
-  const percC = []; 
-  var lowPer = percC;
-  if(percentMoveL >= 1) {percC.push(lowPer + percentMoveL)}else{percC.push(lowPer - percentMoveL)};
+//////////////////////////////////////////////
+    const accumulatedOpenMove = [];
+    const accumulatedOpenMoveB = [];
+    const accumulatedHighMove = [];
+    const accumulatedHighMoveB = [];
+    const accumulatedLowMove = [];
+    const accumulatedLowMoveB = [];
+    const accumulatedCloseMove = [];
+    const accumulatedCloseMoveB = [];
+///////////////////////////////////////////
 
-  const percD = []; 
-  var closePer = percD;
-  if(percentMoveC >= 1) {percD.push(closePer + percentMoveC)}else{percD.push(closePer - percentMoveC)};
-
-console.log(percA, percB, percC, percD)
-
-
- const openV = initA / 4;
-  const highV = initA / 4;
-  const lowV = initA / 4;
-  const closeV = initA / 4;
- 
-*/
-  //console.log(openV, highV, lowV, closeV)
-  //const [inMarketAmount, setNewAmount] = React.useState(openV);
   const [InitAmountopen, setInitAmountOP] = React.useState(() => initA / 4);
   const [InitAmounthigh, setInitAmountHGH] = React.useState(() => initA / 4);
   const [InitAmountlow, setInitAmountLW] = React.useState(() => initA / 4);
@@ -79,39 +63,72 @@ console.log(percA, percB, percC, percD)
   const [SupplyB, setSupplyB] = React.useState(100);
   const [SupplyC, setSupplyC] = React.useState(100);
   const [SupplyD, setSupplyD] = React.useState(100);  
-  /*
-let ITO = (InitAmountopen);
-let ITH = (InitAmounthigh);
-let ITL = (InitAmountlow)
-let ITC = (InitAmountclose);
-  var allResult =(((ITO + ITH) + ITL) + ITC);
-  console.log((((ITO + ITH) + ITL) + ITC)) 
-  const [dai, setDai] = React.useState(allResult);
-*/
 
+  const prevAmount = useRef();
+  const prevPercMove = useRef('');
+  const prevPercMoveHH = useRef();
+  const prevPercMoveLL = useRef();
+  const prevPercMoveCC = useRef();
+
+  useEffect(() => {
+    prevAmount.current = InitAmountopen
+    prevPercMove.current = percentMoveO
+    prevPercMoveHH.current = percentMoveH
+    prevPercMoveLL.current = percentMoveL
+    prevPercMoveCC.current = percentMoveC
+  }, [InitAmountopen, percentMoveO, percentMoveH, percentMoveL, percentMoveC])
+
+ //console.log(prevAmount.current , prevPercMove.current, prevPercMove.current * percentMoveO)
   
+  equationO.push((prevAmount.current * prevPercMove.current) + (prevAmount.current * prevPercMoveHH.current) + (prevAmount.current * prevPercMoveLL.current) + (prevAmount.current * prevPercMoveCC.current))
+  //equationH.push(prevAmount.current * prevPercMoveHH.current)
+  //equationL.push(prevAmount.current * prevPercMoveLL.current)
+  //equationC.push(prevAmount.current * prevPercMoveCC.current)
+  //console.log(equationO)
+
+//////////////////////////////////////////////////////////
+
   for(let i = 0; i < mailBox[0].length; i++) {
-    MoveO.push(mailBox[0][499 + i] / mailBox[0][498 + i]);
+      MoveO.push(mailBox[0][499 + i] / mailBox[0][498 + i]);
+  
       }
- percentMoveO.push(MoveO[mailBox[0].length - 500]);
-  //console.log(percentMoveO)
+      accumulatedOpenMove.push(MoveO[mailBox[0].length - 502] * MoveO[mailBox[0].length - 501])
+      percentMoveO.push(MoveO[mailBox[0].length - 500]);
+      accumulatedOpenMoveB.push(percentMoveO * accumulatedOpenMove)
+   //   console.log(accumulatedOpenMoveB)
 /////////////////////////////////////////////////////////
+
 for(let i = 0; i < mailBox[1].length; i++) {
-  MoveH.push(mailBox[1][499 + i] / mailBox[1][498 + i]);
+    MoveH.push(mailBox[1][499 + i] / mailBox[1][498 + i]);
     }
-percentMoveH.push(MoveH[mailBox[1].length - 500])
+    accumulatedHighMove.push(MoveH[mailBox[1].length - 502] * MoveH[mailBox[1].length - 501])
+    percentMoveH.push(MoveH[mailBox[1].length - 500])
+    accumulatedHighMoveB.push(percentMoveH * accumulatedHighMove)
+   // console.log(accumulatedHighMoveB)
 /////////////////////////////////////////////////////////
+
 for(let i = 0; i < mailBox[2].length; i++) {
   MoveL.push(mailBox[2][499 + i] / mailBox[2][498 + i]);
     }
-percentMoveL.push(MoveL[mailBox[2].length - 500])
+    accumulatedLowMove.push(MoveL[mailBox[2].length - 502] * MoveL[mailBox[2].length - 501])
+    percentMoveL.push(MoveL[mailBox[2].length - 500])
+    accumulatedLowMoveB.push(percentMoveL * accumulatedLowMove)
+  //  console.log(accumulatedLowMoveB)
 ////////////////////////////////////////////////////////
+
 for(let i = 0; i <mailBox[3].length; i++) {
   MoveC.push(mailBox[3][499 + i] / mailBox[3][498 + i]);
     }
-percentMoveC.push(MoveC[mailBox[3].length - 500]);
-
-
+    accumulatedCloseMove.push(MoveC[mailBox[3].length - 502] * MoveC[mailBox[3].length - 501])
+    percentMoveC.push(MoveC[mailBox[3].length - 500]);
+    accumulatedCloseMoveB.push(percentMoveC * accumulatedCloseMove)
+   // console.log(accumulatedCloseMoveB)
+/////////////////////////////////////////////////////////
+//console.log(accumulatedOpenMoveB * accumulatedHighMoveB * accumulatedLowMoveB * accumulatedCloseMoveB * equationO)
+const latessDaiAccount = [];
+latessDaiAccount.push(accumulatedOpenMoveB * accumulatedHighMoveB * accumulatedLowMoveB * accumulatedCloseMoveB * equationO)
+const [latessDaiAcc, setlatessDaiAcc] = React.useState(() => latessDaiAccount);
+/////////////////////////////////////////////////////////
 const dataOpen = [];
 dataOpen.push(((initA / 4) / SupplyA) * percentMoveO);
 const dataHigh = [];
@@ -122,7 +139,7 @@ const dataClose = [];
 dataClose.push(((initA / 4) / SupplyD) * percentMoveC) 
 const dataTotal = [];
 dataTotal.push((dataOpen) + (dataHigh) + (dataLow) + (dataClose))
-console.log(dataTotal)
+//console.log(dataTotal)
  // const [mint] = React.useState(0.1 * Supply)
     
   const fetchData = (time) => {
@@ -131,7 +148,7 @@ console.log(dataTotal)
       time: time,
       number: num,
       momentum: mom,
-    //  NewAmount: setNewAmount,
+      LatessDaiBalance: setlatessDaiAcc,
       initAmountOP: setInitAmountOP,
       initAmountHGH: setInitAmountHGH,
       initAmountLW: setInitAmountLW,
@@ -152,6 +169,7 @@ return (
       <img align="left" src ={'https://ipfs.io/ipfs/QmeMgBEWFGgQKjmz8CvVLGQuU32rT9zEykhiY4AfhEpckB?filename=Eye-Dragon-Wing2.png'}  marginLeft={"200px"} style={{ width: '475px', height: '450px', color: "#black"}} alt="adam" press here/>
       <h1 align="left">A.I.🤖 vs Binance exchange BTC/USDT Timeseries</h1>
       <h2 align="center" style={{marginLeft:'10px', marginRight:'13px'}}>NEURAL NETWORK BRAIN FUNCTION</h2>
+      <h2 align="center" style={{marginLeft:'10px', marginRight:'13px'}}>EMPOWERED WITH MOCK TOKENS </h2>
       <img align="right" src ={'https://ipfs.io/ipfs/QmaUWksQmDUHhEEzctWU5kxJ7siXLjRUdM7CozDt4fLe2D?filename=The-Minter.png'} href={'https://ipfs.io/ipfs/QmWRdonnmgFYUZEUUAQzenp2jeCyRiVkq8Ryp5H49mFrpz'} marginLeft={"200px"} style={{ width: '475px', height: '450px' }} alt="adam"/>
   <h5 align="center" style={{marginLeft:'25px'}}>POWERED BY BRAIN.JS, CHART JS, REDUX AND REACT APP</h5>
       <br />
@@ -162,23 +180,31 @@ return (
   <div className="info" align = "center">
 
   <h1>◻️Introduction◻️</h1>
-    <h4>This project is build out of passion for big Data analytic</h4>
+  <div className='para-one'>
+  <h4>This project is build out of passion for big Data analytic</h4>
     <h4>In other words extremely large data sets that may be analyzed computationally to reveal patterns, trends, and associations, especially relating to human behavior and interactions.</h4>
     <h4>This is were the experimental part comes in.</h4>
     <h4>For years the common stock invester strategy was buy low sell high and some other factors abviously. But the era is now and decentralized networks are changing the map.</h4>
-    <h4>The road map for this app is to introduce a neural network to compute behaviour and use the network to simply act like a mirror. We compare the asset verses the asset </h4>
-    <h4>We compare the asset verses the asset and this outputs a uniq signature.</h4>
-    <h4>Then this signature can be used to compare other assets with precision</h4>
-    <h4>How we bring precision is to create four mock tokens A B C D and we pair there value with the open high low close value individualy.</h4>
-    <h4>Theses four tokens became the signature and the signature is expresss in a regular price chart</h4>
-   <h4>Is it 🧂salt or is it 🌶️pepper?</h4>  
-  <h1>◻️Word from the developer◻️</h1>
+    <h4>The road map for this app is to introduce a neural network to compute behaviour and use the network to simply act like a mirror.</h4>
+    <h4>The latess prices of the assets are then compared with the target predicted value of the neural network.</h4>
+    <h4>The theory is the neural network can predict at 98% accuracy all the time understanding this would lead you to understand that if the latess values is</h4>
+    <h4>below the predicted price it is that the asset is below it's self no matter if price want up or down.</h4>
+    <h4>The question is not about if the sea level is rizing or not it's about if in this fluxtuating ocean, is the asset better or worse then it's own should of been value.</h4>
+    <h4>If the neural network is a fair guy, the should of been value(predicted value) can be used as mesurement from one asset verse an other asset</h4>
+    <h4>This is a great precision tool. But to market this fair ⚖️guy I have much to do.👨‍💻</h4> 
+    <h4>Let's prepare four mock tokens A B C D and pair theses with O H L C individualy. exemple: tkA/O tkB/H tkC/L tkD/C</h4>
+    <h4>By doing this, the neural network is empowered with the market movement.</h4>
+    <h4>Theses four tokens became the signature of his neural network </h4>
+    <h4>The who am I?</h4>
+    <img align="center" src ={Signature} marginLeft={"200px"} marginBottom={"200px"} style={{ width: '350px', height: '300px' }} alt="adam"/>
+    <h1>◻️Word from the developer◻️</h1>
     <h4>This is were the magic🪄 begins, using brain.js neural network to predict trends📈. But truly were to start?🤔</h4>
     <h4>Working with brain js teleported me back 44 years ago, when I could just understand that mixing lots of colors together equals black.</h4> 
     <h4>I was a kid😛 playing with water colors. And we all know that observation, is the child's secret, mixing all thoses colors and learning in the process.</h4>
     <h3 align="center">‼️ BOUYA ‼️ 🤣 ‼️ I WAS REAL GOOD AT MAKING BLACK ‼️ 🤣 ‼️</h3>
     <h5>‼️ ⚠️ ‼️ ADVISERY ‼️ ⚠️ ‼️ NO FINANCIAL ‼️ ⚠️ ‼️ ADVISERY ‼️ ⚠️ ‼️</h5>
     <h1>💝‼️ WELCOME ‼️ 📈📉 ‼️ WELCOME ‼️ 📈📉 ‼️ WELCOME ‼️💝</h1>
+  </div>
     
   </div>
 
@@ -240,89 +266,99 @@ return (
          />
          <div className='tinker-minter'>
            <h1 className='tinker-title'>
-             THE TINKER MINTER DAI EXTRACTOR
+             THE TINKER MINTER BTC OBSERVATORY
            </h1>
+           <img align="center" src ={'https://ipfs.io/ipfs/QmaUWksQmDUHhEEzctWU5kxJ7siXLjRUdM7CozDt4fLe2D?filename=The-Minter.png'}  style={{ width: '270px', height: '295px' }} alt="adam"/>
            <h3 className='tinker-title'>
              (TEST VERSION 1.0.0)
            </h3>
+           
          <button className='btns-wrapperA' onClick={() => setInterval(() => {fetchData("momentum")}, 60100)}>⏳START 1 MIN INTERVAL</button>
            <button className='btns-wrapperB' onClick={(() => {fetchData()})}>🕳️INSERT TRAINNING DATA📃📃... NOW🕳️</button>
-
            <div className='init-amount-backg'>
+           
+          
 
            <div className='initial-Amount'>
-           <h1>🧐</h1>
-           <h4>SPECULATIVE MOCK DAI ACCOUNT: {(InitAmountopen * percentMoveO) + (InitAmounthigh * percentMoveH) + (InitAmountlow * percentMoveL) + (InitAmountclose * percentMoveC)}</h4>
+           <div onChange={e => setlatessDaiAcc(e.target.value)} />
+           <h1 align="right">🧐</h1>
+           <h2 align='auto'> SPECULATIVE TINKER BRAIN ACCOUNT </h2>
+           <h3>| { latessDaiAccount } |</h3>
+           <img align="left" src ={walletGoodImage}  style={{ width: '65px', height: '65px', marginTop: '10px' }} alt="adam"/>
            </div>
 
            </div>
-
+           <div className='mini-navbar-I'>
+         <a className= 'the-link-projects' href={'http://sweet-firefly-8768.on.fleek.co'}>BTC TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.eth-observatory.surge.sh'}>ETH TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.ltc-observatory.surge.sh'}>LTC TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.comp-observatory.surge.sh'}>COMP TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.link-observatory.surge.sh'}>LINK TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.aave-observatory.surge.sh'}>AAVE TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.snx-observatory.surge.sh'}>SNX TINKER 1M</a>
+         <a className= 'the-link-projects' href={'http://a.i.doge-observatory.surge.sh'}>DOGE TINKER 1M</a>
+         </div>
       <div className='moch-tokens' >
       <div className='maxSupA'>
            <input onChange={e => setSupplyA(e.target.value)} />
-           <h1>🪙</h1>
-           <h4>MOCK TOKEN A MAX SUPPLY : {SupplyA}</h4>
+           <img  src ={brainImage2}  style={{ width: '45px', height: '45px', marginTop: '10px' }} alt="adam"/>
+           <h4>|  BRAIN TOKEN A MAX SUPPLY  | {SupplyA} |</h4>
            <input onChange={e => setInitAmountOP(e.target.value)} />
-           <h4>PRICE PER UNIT : {InitAmountopen / SupplyA} </h4>
-           <h4> PERCENT % MOVE : {percentMoveO}</h4>
-           <h4>DAI BALANCE : {InitAmountopen * percentMoveO}</h4>
+           <h4>|  PRICE PER UNIT  | {InitAmountopen / SupplyA} |</h4>
+           <h4>|  BTC OPEN🔴 % MOVE  | {percentMoveO} |</h4>
+           <h4>|  BRAIN BALANCE  | {InitAmountopen * percentMoveO} |</h4>
            </div>
 
            <div className='maxSupB'>
            <input onChange={e => setSupplyB(e.target.value)} />
-           <h1>🪙</h1>
-           <h4>MOCK TOKEN B MAX SUPPLY : {SupplyB}</h4>
+           <img  src ={brainImage2}  style={{ width: '45px', height: '45px', marginTop: '10px' }} alt="adam"/>
+           <h4>| BRAIN TOKEN B MAX SUPPLY | {SupplyB} |</h4>
            <input onChange={e => setInitAmountHGH(e.target.value)} />
-           <h4> PRICE PER UNIT : {InitAmounthigh / SupplyB} </h4>
-           <h4> PERCENT % MOVE : {percentMoveH}</h4>
-           <h4> DAI BALANCE : {InitAmounthigh * percentMoveH}</h4>
+           <h4>| PRICE PER UNIT | {InitAmounthigh / SupplyB} |</h4>
+           <h4>| BTC HIGH🔵 % MOVE | {percentMoveH} |</h4>
+           <h4>| BRAIN BALANCE | {InitAmounthigh * percentMoveH} |</h4>
            </div>
 
            <div className='maxSupC'>
            <input onChange={e => setSupplyC(e.target.value)} />
-           <h1>🪙</h1>
-           <h4>MOCK TOKEN C MAX SUPPLY : {SupplyC}</h4>
+           <img  src ={brainImage2}  style={{ width: '45px', height: '45px', marginTop: '10px' }} alt="adam"/>
+           <h4>| BRAIN TOKEN C MAX SUPPLY | {SupplyC} |</h4>
            <input onChange={e => setInitAmountLW(e.target.value)} />
-           <h4>PRICE PER UNIT : {InitAmountlow / SupplyC}</h4>
-           <h4> PERCENT % MOVE : {percentMoveL}</h4>
-           <h4> DAI BALANCE : {InitAmountlow * percentMoveL}</h4>
+           <h4>| PRICE PER UNIT | {InitAmountlow / SupplyC} |</h4>
+           <h4>| BTC LOW🟡 % MOVE | {percentMoveL} |</h4>
+           <h4>| BRAIN BALANCE | {InitAmountlow * percentMoveL} |</h4>
            </div>
 
            <div className='maxSupD'>
            <input onChange={e => setSupplyD(e.target.value)} />
-           <h1>🪙</h1>
-           <h4>MOCK TOKEN D MAX SUPPLY : {SupplyD}</h4>
+           <img  src ={brainImage2}  style={{ width: '45px', height: '45px', marginTop: '10px' }} alt="adam"/>
+           <h4>| BRAIN TOKEN D MAX SUPPLY | {SupplyD} |</h4>
            <input onChange={e => setInitAmountCL(e.target.value)} />
-           <h4>PRICE PER UNIT : {InitAmountclose / SupplyD}</h4>
-           <h4> PERCENT % MOVE : {percentMoveC}</h4>
-           <h4>DAI BALANCE : {InitAmountclose * percentMoveC}</h4>
+           <h4>| PRICE PER UNIT | {InitAmountclose / SupplyD} |</h4>
+           <h4>| BTC CLOSE🟢 % MOVE | {percentMoveC} |</h4>
+           <h4>| BRAIN BALANCE | {InitAmountclose * percentMoveC} |</h4>
            </div>
       </div>
       <div className='dai-amount-backg'>
            <div className='dai-Amount'>    
-           <h1>🪙</h1>
-           <h4>MOCK DAI ACCOUNT: {(InitAmountopen * percentMoveO) + (InitAmounthigh * percentMoveH) + (InitAmountlow * percentMoveL) + (InitAmountclose * percentMoveC)}</h4>
+           <img  src ={brainImage2}  style={{ width: '45px', height: '45px', marginTop: '10px' }} alt="adam"/>
+           <h4>INITIAL MOCK INVESTEMENT: {(InitAmountopen * percentMoveO) + (InitAmounthigh * percentMoveH) + (InitAmountlow * percentMoveL) + (InitAmountclose * percentMoveC)}</h4>
            </div>
-
            </div>
          </div>
 
-
-
-     
          <div className= 'projects-link' >
+         <div className='mini-navbar-II'>
          <img className='the-image-projects' src ={'https://ipfs.io/ipfs/QmTTabZTHf7ejwTJxUwNR9g15aCV9Q65yD5UvdQb7qfwMm?filename=Dragon-Head.png'} alt="adam"/>
          <a className= 'the-link-projects' href={'http://crypto-flowers.surge.sh/'}> ☣️NFT-testnet-rinkeby☣️ CRYPTO-FLOWERS GALLERY</a>
-         
+          </div>         
          </div>
-
           </div>
           <div style={{marginBottom: '100px'}}>
-
           </div>
          {state.loading && <p>Loading...</p>}
           </div>
-  </div>
+          </div>
         <div className='container'>
 
         <div className='chartA-I-result' style={{height:'60%', width:'fit-content(100)'}}>
@@ -509,5 +545,7 @@ SOME STUFF:
          data={stateB.dataH} options={{responsive: true}}
          />
          </div>
+
+         (InitAmountopen * percentMoveO) + (InitAmounthigh * percentMoveH) + (InitAmountlow * percentMoveL) + (InitAmountclose * percentMoveC)
 
 */
