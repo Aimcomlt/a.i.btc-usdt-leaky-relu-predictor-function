@@ -7,7 +7,7 @@ const config = {
   log: false, 
   learningRate: 0.3,
   momentum: 0.08,
-  hiddenLayers: [50], // array of ints for the sizes of the hidden layers in the network
+  hiddenLayers: [4,4,4,12,6,3], // array of ints for the sizes of the hidden layers in the network
   activation: 'leaky-relu', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
   leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
 };
